@@ -156,10 +156,12 @@ Only the parent of the component can change the props
         maxNumber: '5',
         anagrams: anagrams,
         // anagram:  Object.values(anagrams)[0][0][randInt(0,4)],
-        outerArray: Object.values(anagrams)[0],
+        outerArray: Object.values(anagrams)[randInt(0,3)],
+        // outerArray: [],
         // randomOuter: Object.values(anagrams)[0][randInt(0, 8)],
         // randomOuter: [],
-        randomOuter: Object.values(anagrams)[0][randInt(0, 8)],
+        // randomOuter: Object.values(anagrams)[0][randInt(0, 8)],
+        randomOuter: Object.values(anagrams)[randInt(0,3)][randInt(0,8)],
         anagram: [],
         // anagram: Object.values(anagrams)[0][randInt(0, [randInt(0, [randInt(0, 4)])])][0],
         answer: '',
@@ -203,9 +205,34 @@ Only the parent of the component can change the props
           console.log("********** WINNER *********");
           return true;
       }
-
+        /*
         this.randomOuter = Object.values(anagrams)[0][randInt(0, this.outerArray.length - 1)];
         this.anagram = this.randomOuter[randInt(0, this.randomOuter.length - 1)];
+        */
+
+        let ary = this.maxNumber;
+        switch (ary) {
+          case '6':
+            this.outerArray = Object.values(anagrams)[1];
+            this.randomOuter = this.outerArray[randInt(0, this.outerArray.length - 1)];
+            this.anagram = this.randomOuter[randInt(0, this.randomOuter.length - 1)];
+            break;
+          case '7':
+            this.outerArray = Object.values(anagrams)[2];
+            this.randomOuter = this.outerArray[randInt(0, this.outerArray.length - 1)];
+            this.anagram = this.randomOuter[randInt(0, this.randomOuter.length - 1)];
+            break;
+          case '8':
+            this.outerArray = Object.values(anagrams)[3]
+            this.randomOuter = this.outerArray[randInt(0, this.outerArray.length - 1)];
+            this.anagram = this.randomOuter[randInt(0, this.randomOuter.length - 1)];
+            break;
+          default:
+            this.randomOuter = Object.values(anagrams)[0][randInt(0, this.outerArray.length - 1)];
+            this.anagram = this.randomOuter[randInt(0, this.randomOuter.length - 1)];
+            break;
+        }
+
         this.outerArray.splice(this.outerArray.indexOf(this.randomOuter), 1); // remove sub-array from parent
         this.answer = '';
         this.$nextTick(() => this.$refs.answer.focus());
@@ -283,6 +310,30 @@ Only the parent of the component can change the props
       config() {
         this.screen = "config";
       },
+/*
+      chooseWordLength() {
+        let ary = 'this.maxNumber';
+        switch (ary) {
+          case '6':
+            this.randomOuter = Object.values(anagrams)[1][randInt(0, this.outerArray.length - 1)];
+            this.anagram = this.randomOuter[randInt(0, this.randomOuter.length - 1)];
+            break;
+          case '7':
+            this.randomOuter = Object.values(anagrams)[2][randInt(0, this.outerArray.length - 1)];
+            this.anagram = this.randomOuter[randInt(0, this.randomOuter.length - 1)];
+            break;
+          case '8':
+            this.randomOuter = Object.values(anagrams)[3][randInt(0, this.outerArray.length - 1)];
+            this.anagram = this.randomOuter[randInt(0, this.randomOuter.length - 1)];
+            break;
+          default:
+            this.randomOuter = Object.values(anagrams)[0][randInt(0, this.outerArray.length - 1)];
+            this.anagram = this.randomOuter[randInt(0, this.randomOuter.length - 1)];
+        }
+        // this.chooseAnagram()
+      },
+      */
+
       /*
       chooseWordLength() {
         // console.log(this.numbers[0]);
