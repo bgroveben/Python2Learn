@@ -1,10 +1,13 @@
 <template>
   <main id="main-container">
     <div v-if="screen === 'config'" id="config-container">
-      <h1>Mathificent</h1>
-      <SelectInput :currentValue="operation" label="Operation" 
-        id="operation" v-model="operation" :options="operations" />
-      <SelectInput :currentValue="maxNumber" label="Maximum Number"
+      <h1 class="text-center mb-3">Anagram Hunt</h1>
+      <ol>
+        <li>Choose word length.</li>
+        <li>Press Play button.</li>
+        <li>Find as many anagrams as you can.</li>
+      </ol>
+      <SelectInput :currentValue="maxNumber" label="Choose Word Length"
         id="max-number" v-model="maxNumber" :options="numbers" />
       <PlayButton @play-button-click="play" />
     </div>
@@ -14,7 +17,9 @@
           <div>
             <h2>Time's Up!</h2>
             <strong class="big">You Answered</strong>
-            <div class="huge">{{score}}</div>
+            <div class="huge">
+              {{score}}
+            </div>
             <strong class="big">Questions Correctly</strong>
             <button class="btn btn-primary form-control m-1"
               v-on:click="restart()">
@@ -31,27 +36,70 @@
         <template v-if="timeLeft > 0">
           <div>
             <div class="row border-bottom" id="scoreboard">
+              
               <div class="col px-3 text-left">
                 <Score :score="score" />
               </div>
+
               <div class="col px-3 text-right">
                 <Timer :timeLeft="timeLeft" />
               </div>
             </div>
-            <div :class="equationClass" id="equation">
-              <Equation :question="question"
-                :answer="input"
-                :answered="answered" />
+            <div class="mt-3">
+              <h3>Anagram:</h3>
             </div>
-            <div class="row" id="buttons">
-              <div class="col">
-                <button class="btn btn-primary number-button"
-                  v-for="button in buttons" :key="button"
-                  @click="setInput(button)">{{button}}</button>
-                <button class="btn btn-primary" id="clear-button"
-                  @click="clear">Clear</button>
+            <div class="row border-bottom">
+              <div class="col text-center">
+                <h3 class="fw-bold text-primary" id="anagram">{{anagram}}</h3>
+                <h3 class="fw-bold text-success" id="answer">{{answer}}</h3>
+                <div>
+                  <div class="my-3">
+                    <h3>Answer Here:</h3>
+                    <input type="text" class="form-control" v-model="answer" ref="answer" placeholder="Your Answer" aria-label="Answer" id="answer" aria-describedby="Answer" />
+                  </div>
+                </div>
+                <InputButton @is-anagram="isAnagram" />
+                <!--
+                <div class="col">
+                    
+                    <button class="btn btn-lg btn-success form-control ms-4" @click="isAnagram(anagram, answer)">Enter</button>
+                    <button class="btn btn-lg btn-success form-control ms-4" @click="$emit(isAnagram(anagram, answer))">Emit</button>
+                    
+                    <button class="btn btn-lg btn-success form-control ms-4" @click="isAnagram(anagram, answer)">Enter</button>
+                </div>
+                <br />
+                -->
+                <Anagrams :anagramsGuessed="anagramsGuessed" :anagramsLeft="anagramsLeft" />
               </div>
             </div>
+    <!--
+    <div id="body">
+    <div class="mt-3">
+      <h3>Anagram:</h3>
+    </div>
+    <div>
+      <h3 class="fw-bold text-primary" id="anagram">{{anagram}}</h3>
+      <h3 class="fw-bold text-success" id="answer">{{answer}}</h3>
+        <div>
+          <div class="my-3">
+            <h3>Answer Here:</h3>
+            <input type="text" class="form-control" v-model="answer" ref="answer" placeholder="Your Answer" aria-label="Answer" id="answer" aria-describedby="Answer" />
+          </div>
+        </div>
+        <div class="row input-group">
+          <div class="col input-group">
+            <h4>Anagrams left: {{anagramsLeft}}</h4>
+          </div>
+          <div class="col">
+            <button class="btn btn-lg btn-success form-control ms-4" @click="isAnagram(anagram, answer)">Enter</button>
+          </div>
+          <div class="row mt-3">
+            <h4>Anagrams guessed: {{anagramsGuessed}}</h4>
+          </div>
+          </div>
+          </div>   
+          </div>
+          -->        
           </div>
         </template>
       </transition>
@@ -62,58 +110,207 @@
 <script>
   import SelectInput from './SelectInput';
   import PlayButton from './PlayButton';
+  import InputButton from './InputButton.vue';
   import Score from './Score';
   import Timer from './Timer';
-  import Equation from './Equation';
-  import {randInt} from '../helpers/helpers';
+  import Anagrams from './Anagrams';
+  import anagrams from "../../src/helpers/anagrams.js";
+  import {randInt} from '../helpers/gameplay.js';
   export default {
     name: 'Main',
+    props: {
+      /*
+      randomWord: {
+        type: String
+      }
+      */
+      /*
+In Vue, we pass data down the the component tree using props.
+A parent component will use props to pass data down to it's children components.
+Those components in turn pass data down another layer, and so on.
+Then, to pass data back up the component tree, we use events.
+      */
+      /*
+Only the component can change it's own state
+Only the parent of the component can change the props
+      */
+      // anagrams: Array,
+      // maxNumber: String
+      // randomWord: String
+    },
     components: {
       SelectInput,
       PlayButton,
       Score,
       Timer,
-      Equation
+      Anagrams,
+      InputButton
     },
     data: function() {
       return {
         operations: [
-          ['Addition', '+'],
-          ['Subtraction', '-'],
-          ['Multiplication', 'x'],
-          ['Division', '/']
+          ['5'],['6'],['7'],['8']
         ],
-        operation: 'x',
-        maxNumber: '10',
-        buttons: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
         screen: 'config',
         input: '',
-        operands: {num1: '1', num2: '1'},
+        maxNumber: '5',
+        anagrams: anagrams,
+        // anagram:  Object.values(anagrams)[0][0][randInt(0,4)],
+        outerArray: Object.values(anagrams)[0],
+        // randomOuter: Object.values(anagrams)[0][randInt(0, 8)],
+        // randomOuter: [],
+        randomOuter: Object.values(anagrams)[0][randInt(0, 8)],
+        anagram: [],
+        // anagram: Object.values(anagrams)[0][randInt(0, [randInt(0, [randInt(0, 4)])])][0],
+        answer: '',
+        anagramsLeft: Object.values(anagrams)[0][0][randInt(0,4)].length - 1,
+        // anagramsGuessed: Object.values(anagrams)[0][0],
+        anagramsGuessed: [],
+        // anagramsList: anagrams,
+        // firstWord: '',
+        // firstWord: Object.values(this.anagramsList)[0][0][randInt(0,4)],
+        // randomWord: Object.values(anagrams)[0][0][randInt(0,4)],
+        // randomWord: randomWord,
         answered: false,
         score: 0,
-        gameLength: 60,
+        gameLength: 90,
         timeLeft: 0
       }
     },
     methods: {
+
+      chooseAnagram() {
+        console.log();
+        console.log("chooseAnagram() called");
+        console.log("this.operations: " + this.operations);
+        console.log("this.maxNumber: "+ this.maxNumber);
+        
+  /*
+       if (this.outerArray.length < 1 && this.randomOuter.length < 1) {
+          this.outerArray = [];
+          this.randomOuter = [];
+          this.timeLeft = 0;
+          this.answer = 'You Win!';
+          return true;
+        }
+*/
+
+      if (this.outerArray.length === 0 && this.randomOuter.length === 0) {
+          // this.outerArray = [];
+          // this.randomOuter = [];
+          this.timeLeft = 1;
+          this.answer = 'You Win!';
+          console.log("********** WINNER *********");
+          return true;
+      }
+
+        this.randomOuter = Object.values(anagrams)[0][randInt(0, this.outerArray.length - 1)];
+        this.anagram = this.randomOuter[randInt(0, this.randomOuter.length - 1)];
+        this.outerArray.splice(this.outerArray.indexOf(this.randomOuter), 1); // remove sub-array from parent
+        this.answer = '';
+        this.$nextTick(() => this.$refs.answer.focus());
+        this.anagramsGuessed = [];
+
+        if (typeof(this.anagram) === 'undefined') {  // out of words? find another array
+          this.randomOuter = Object.values(anagrams)[0][randInt(0, this.outerArray.length - 1)];
+          this.anagram = this.randomOuter[randInt(0, this.randomOuter.length - 1)];
+          this.answer = '';
+          this.$nextTick(() => this.$refs.answer.focus());
+          this.anagramsGuessed = [];
+        }
+        this.randomOuter.splice(this.randomOuter.indexOf(this.anagram), 1); // remove chosen anagram from array
+        this.anagramsLeft = this.randomOuter.length;
+        console.log("this.randomOuter: " + this.randomOuter);
+        console.log();
+      },
+
+      isAnagram() {
+
+        console.log("this.randomOuter.length: " + this.randomOuter.length);
+        console.log();
+        console.log("this.randomOuter in isAnagram(): " + this.randomOuter);
+        console.log()
+        /*
+        if (typeof(this.answer) === 'undefined') {
+          this.timer= 0;
+          console.log(" typeof(_this2.$refs.answer) === 'undefined' ");
+        }
+        */
+/*
+        if (this.outerArray.length < 1 && this.randomOuter.length < 1) {
+          this.outerArray = [];
+          this.randomOuter = [];
+          this.timeLeft = 0;
+          this.answer = 'You Win!';
+          return true;
+        } 
+*/
+/*
+      if (this.outerArray.length === 0 && this.randomOuter.length === 0) {
+          // this.outerArray = [];
+          // this.randomOuter = [];
+          this.timeLeft = 1;
+          this.answer = 'You Win!';
+          console.log("********** WINNER *********");
+          // return true;
+      }
+*/ 
+      /*
+        if (this.answer === this.anagram) {
+          this.answer = '';
+          this.$nextTick(() => this.$refs.answer.focus());
+        }
+      */
+      if (this.randomOuter.includes(this.answer)) {
+        this.anagramsGuessed.push(this.answer);
+        this.randomOuter.splice(this.randomOuter.indexOf(this.answer), 1); // remove chosen anagram from array 
+        this.score++;
+        this.answer = '';
+        this.$nextTick(() => this.$refs.answer.focus());
+        this.anagramsLeft -= 1;
+        console.log("this.randomOuter after correct answer in isAnagram(): " + this.randomOuter);
+      }
+      if (this.randomOuter.length < 1) {
+        this.chooseAnagram();
+        this.answer = '';
+        this.$nextTick(() => this.$refs.answer.focus());
+        this.anagramsGuessed = [];
+      }
+        this.answer = '';
+        this.$nextTick(() => this.$refs.answer.focus());        
+      },
+
       config() {
         this.screen = "config";
       },
+      /*
+      chooseWordLength() {
+        // console.log(this.numbers[0]);
+        // this.randomWord = Object.values(this.anagramsList)[0][0][randInt(0,4)]
+        console.log("this.maxNumber: " + this.maxNumber);
+        // console.log("this.firstWord: " + this.firstWord);
+        if (this.maxNumber == 5) {
+          console.log("five");
+          // console.log("this.randomWord: " + this.randomWord);
+        } else if (this.maxNumber == 6) {
+          console.log("six");
+        } else if (this.maxNumber == 7) {
+          console.log("seven");
+        } else {
+          console.log("eight");
+        }
+        // return this.maxNumber;
+        // console.log(typeof(this.numbers[0][0]));
+      },
+      */
       play() {
         this.screen = "play";
-        this.newQuestion();
+        // console.log("hello");
+        // this.chooseWordLength();
+        // this.newQuestion();
         this.startTimer();
-      },
-      setInput(value) {
-        this.input += String(value);
-        this.input = String(Number(this.input));
-        this.answered = this.checkAnswer(this.input, 
-                                        this.operation,
-                                        this.operands);
-        if (this.answered) {
-          setTimeout(this.newQuestion, 300);
-          this.score++;
-        }
+        this.$nextTick(() => this.$refs.answer.focus());
+        this.chooseAnagram();
       },
       clear() {
         this.input = '';
@@ -137,25 +334,7 @@
         }
         return {num1, num2};
       },
-      checkAnswer(userAnswer, operation, operands) {
-        if (isNaN(userAnswer)) return false; // User hasn't answered
-        
-        let correctAnswer;
-        switch(operation) {
-          case '+':
-            correctAnswer = operands.num1 + operands.num2;
-            break;
-          case '-':
-            correctAnswer = operands.num1 - operands.num2;
-            break;
-          case 'x':
-            correctAnswer = operands.num1 * operands.num2;
-            break;
-          default: // division
-            correctAnswer = operands.num1 / operands.num2;
-        }
-        return (parseInt(userAnswer) === correctAnswer);
-      },
+      /*
       newQuestion() {
         this.input='';
         this.answered = false;
@@ -163,6 +342,7 @@
           this.operation, 0, this.maxNumber
         );
       },
+      */
       startTimer() {
         window.addEventListener('keyup', this.handleKeyUp);
         this.timeLeft = this.gameLength;
@@ -178,43 +358,30 @@
       },
       restart() {
         this.score = 0;
+        // this.chooseWordLength();
         this.startTimer();
-        this.newQuestion();
+        // this.newQuestion();
       },
-      handleKeyUp(e) {
-        e.preventDefault(); // prevent the normal behavior of the key
-        if (e.keyCode === 32 || e.keyCode === 13) { // space/Enter
-          this.clear();
-        } else if (e.keyCode === 8) { // backspace
-          this.input = this.input.substring(0, this.input.length - 1);
-        } else if (!isNaN(e.key)) {
-          this.setInput(e.key);
-        }
+
+    /*
+      chooseFirstWord() {
+        let firstWord = Object.values(this.anagramsList)[0][0][randInt(0,4)];
+        console.log("firstWord: " + firstWord);
+        return firstWord;
       }
+      */
     },
     computed: {
       numbers: function() {
         const numbers = [];
-        for (let number = 2; number <= 100; number++) {
+        for (let number = 5; number <= 8; number++) {
           numbers.push([number, number]);
         }
         return numbers;
-      },
-      question: function() {
-        const num1 = this.operands.num1;
-        const num2 = this.operands.num2;
-        const equation = `${num1} ${this.operation} ${num2}`;
-        return equation;
-      },
-      equationClass: function() {
-        if (this.answered) {
-          return 'row text-primary my-2 fade';
-        } else {
-          return 'row text-secondary my-2';
-        }
       }
     }
   }
+  
 </script>
 
 <style scoped>
