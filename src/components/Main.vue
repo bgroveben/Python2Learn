@@ -59,47 +59,9 @@
                   </div>
                 </div>
                 <InputButton @is-anagram="isAnagram" />
-                <!--
-                <div class="col">
-                    
-                    <button class="btn btn-lg btn-success form-control ms-4" @click="isAnagram(anagram, answer)">Enter</button>
-                    <button class="btn btn-lg btn-success form-control ms-4" @click="$emit(isAnagram(anagram, answer))">Emit</button>
-                    
-                    <button class="btn btn-lg btn-success form-control ms-4" @click="isAnagram(anagram, answer)">Enter</button>
-                </div>
-                <br />
-                -->
                 <Anagrams :anagramsGuessed="anagramsGuessed" :anagramsLeft="anagramsLeft" />
               </div>
             </div>
-    <!--
-    <div id="body">
-    <div class="mt-3">
-      <h3>Anagram:</h3>
-    </div>
-    <div>
-      <h3 class="fw-bold text-primary" id="anagram">{{anagram}}</h3>
-      <h3 class="fw-bold text-success" id="answer">{{answer}}</h3>
-        <div>
-          <div class="my-3">
-            <h3>Answer Here:</h3>
-            <input type="text" class="form-control" v-model="answer" ref="answer" placeholder="Your Answer" aria-label="Answer" id="answer" aria-describedby="Answer" />
-          </div>
-        </div>
-        <div class="row input-group">
-          <div class="col input-group">
-            <h4>Anagrams left: {{anagramsLeft}}</h4>
-          </div>
-          <div class="col">
-            <button class="btn btn-lg btn-success form-control ms-4" @click="isAnagram(anagram, answer)">Enter</button>
-          </div>
-          <div class="row mt-3">
-            <h4>Anagrams guessed: {{anagramsGuessed}}</h4>
-          </div>
-          </div>
-          </div>   
-          </div>
-          -->        
           </div>
         </template>
       </transition>
@@ -118,26 +80,7 @@
   import {randInt} from '../helpers/gameplay.js';
   export default {
     name: 'Main',
-    props: {
-      /*
-      randomWord: {
-        type: String
-      }
-      */
-      /*
-In Vue, we pass data down the the component tree using props.
-A parent component will use props to pass data down to it's children components.
-Those components in turn pass data down another layer, and so on.
-Then, to pass data back up the component tree, we use events.
-      */
-      /*
-Only the component can change it's own state
-Only the parent of the component can change the props
-      */
-      // anagrams: Array,
-      // maxNumber: String
-      // randomWord: String
-    },
+
     components: {
       SelectInput,
       PlayButton,
@@ -155,24 +98,13 @@ Only the parent of the component can change the props
         input: '',
         maxNumber: '5',
         anagrams: anagrams,
-        // anagram:  Object.values(anagrams)[0][0][randInt(0,4)],
-        // outerArray: Object.values(anagrams)[randInt(0,3)],
         outerArray: [1],
-        // randomOuter: Object.values(anagrams)[0][randInt(0, 8)],
-        // randomOuter: [],
-        // randomOuter: Object.values(anagrams)[0][randInt(0, 8)],
+        // randomOuter: [1],
         randomOuter: Object.values(anagrams)[randInt(0,3)][randInt(0,8)],
         anagram: [],
-        // anagram: Object.values(anagrams)[0][randInt(0, [randInt(0, [randInt(0, 4)])])][0],
         answer: '',
         anagramsLeft: Object.values(anagrams)[0][0][randInt(0,4)],
-        // anagramsGuessed: Object.values(anagrams)[0][0],
         anagramsGuessed: [],
-        // anagramsList: anagrams,
-        // firstWord: '',
-        // firstWord: Object.values(this.anagramsList)[0][0][randInt(0,4)],
-        // randomWord: Object.values(anagrams)[0][0][randInt(0,4)],
-        // randomWord: randomWord,
         answered: false,
         score: 0,
         gameLength: 90,
@@ -275,9 +207,6 @@ Only the parent of the component can change the props
 
       play() {
         this.screen = "play";
-        // console.log("hello");
-        // this.chooseWordLength();
-        // this.newQuestion();
         this.startTimer();
         this.$nextTick(() => this.$refs.answer.focus());
         this.chooseAnagram();
@@ -286,37 +215,7 @@ Only the parent of the component can change the props
       clear() {
         this.input = '';
       },
-
-      /*
-      getRandNumbers(operator, low, high) {
-        let num1 = randInt(low, high);
-        let num2 = randInt(low, high);
-        const numHigh = Math.max(num1, num2);
-        const numLow = Math.min(num1, num2);
-        
-        if(operator === '-') { // Make sure higher num comes first
-          num1 = numHigh;
-          num2 = numLow;
-        }
-        
-        if(operator === '/') {
-          if (num2 === 0) { // No division by zero
-            num2 = randInt(1, high);
-          }
-          num1 = (num1 * num2);
-        }
-        return {num1, num2};
-      },
-      */
-      /*
-      newQuestion() {
-        this.input='';
-        this.answered = false;
-        this.operands = this.getRandNumbers(
-          this.operation, 0, this.maxNumber
-        );
-      },
-      */
+ 
       startTimer() {
         window.addEventListener('keyup', this.handleKeyUp);
         this.timeLeft = this.gameLength;
@@ -332,18 +231,9 @@ Only the parent of the component can change the props
       },
       restart() {
         this.score = 0;
-        // this.chooseWordLength();
         this.startTimer();
-        // this.newQuestion();
       },
 
-    /*
-      chooseFirstWord() {
-        let firstWord = Object.values(this.anagramsList)[0][0][randInt(0,4)];
-        console.log("firstWord: " + firstWord);
-        return firstWord;
-      }
-      */
     },
     computed: {
       numbers: function() {
