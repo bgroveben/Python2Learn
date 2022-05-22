@@ -36,11 +36,9 @@
         <template v-if="timeLeft > 0">
           <div>
             <div class="row border-bottom" id="scoreboard">
-              
               <div class="col px-3 text-left">
                 <Score :score="score" />
               </div>
-
               <div class="col px-3 text-right">
                 <Timer :timeLeft="timeLeft" />
               </div>
@@ -99,71 +97,51 @@
         maxNumber: '5',
         anagrams: anagrams,
         outerArray: [1],
-        // randomOuter: [1],
-        randomOuter: Object.values(anagrams)[randInt(0,3)][randInt(0,8)],
+        randomOuter: [1],
         anagram: [],
         answer: '',
-        anagramsLeft: Object.values(anagrams)[0][0][randInt(0,4)],
+        anagramsLeft: [],
         anagramsGuessed: [],
         answered: false,
         score: 0,
-        gameLength: 90,
+        gameLength: 60,
         timeLeft: 0
       }
     },
     methods: {
 
       chooseAnagram() {
-        console.log();
-        console.log("chooseAnagram() called");
-        console.log("this.maxNumber: "+ this.maxNumber);
-        console.log();
-
         if (this.outerArray.length === 0 && this.randomOuter.length === 0) {
-            this.timeLeft = 1;
-            this.answer = 'You Win!';
-            console.log("********** WINNER *********");
-            return true;
+          console.log("********** WINNER *********");
+          this.anagrams = {};
+          this.randomOuter = [1];
+          this.anagram = 'You Guessed All Of Them!';
+          return true;  // Game over, stop the rest of the function
         }
-
         this.chooseWordLength();
-        console.log("this.chooseWordLength() called");
-        console.log("this.outerArray.length: " + this.outerArray.length);
-        console.log("this.randomOuter.length: " + this.randomOuter.length);
-        console.log();
-        this.outerArray.splice(this.outerArray.indexOf(this.randomOuter), 1); // remove sub-array from parent
         this.answer = '';
         this.$nextTick(() => this.$refs.answer.focus());
+        // remove sub-array from outer array
+        this.outerArray.splice(this.outerArray.indexOf(this.randomOuter), 1); 
         this.anagramsGuessed = [];
-
-      if (typeof(this.anagram) === 'undefined') {  // out of words? find another array
-        this.randomOuter = Object.values(anagrams)[0][randInt(0, this.outerArray.length-1)];
-        this.anagram = this.randomOuter[randInt(0, this.randomOuter.length-1)];
-        this.answer = '';
-        this.$nextTick(() => this.$refs.answer.focus());
-        this.anagramsGuessed = [];
-      }
-        this.randomOuter.splice(this.randomOuter.indexOf(this.anagram), 1); // remove chosen anagram from array
+         // remove displayed anagram from array
+        this.randomOuter.splice(this.randomOuter.indexOf(this.anagram), 1);
         this.anagramsLeft = this.randomOuter.length;
-        console.log("this.randomOuter: " + this.randomOuter);
-        console.log();
+        // cheating => display remaining anagrams;
+        console.log("cheating: " + this.randomOuter);
       },
 
       isAnagram() {
-
-        console.log("this.randomOuter.length: " + this.randomOuter.length);
-        console.log();
-        console.log("this.randomOuter in isAnagram(): " + this.randomOuter);
-        console.log()
-        
       if (this.randomOuter.includes(this.answer)) {
         this.anagramsGuessed.push(this.answer);
-        this.randomOuter.splice(this.randomOuter.indexOf(this.answer), 1); // remove chosen anagram from array 
+        // remove chosen answer from array 
+        this.randomOuter.splice(this.randomOuter.indexOf(this.answer), 1); 
         this.score++;
         this.answer = '';
         this.$nextTick(() => this.$refs.answer.focus());
         this.anagramsLeft -= 1;
-        console.log("this.randomOuter after correct answer in isAnagram(): " + this.randomOuter);
+         // also cheating
+        console.log("cheating: " + this.randomOuter);
       }
       if (this.randomOuter.length < 1) {
         this.chooseAnagram();
@@ -172,7 +150,7 @@
         this.anagramsGuessed = [];
       }
         this.answer = '';
-        this.$nextTick(() => this.$refs.answer.focus());        
+        this.$nextTick(() => this.$refs.answer.focus());
       },
 
       config() {
@@ -180,35 +158,37 @@
       },
 
       chooseWordLength() {
-        let ary = this.maxNumber;
-        switch (ary) {
+        switch (this.maxNumber) {
           case '5':
-            this.outerArray = Object.values(anagrams)[0]
+            this.outerArray = Object.values(this.anagrams)[0]
             this.randomOuter = this.outerArray[randInt(0, this.outerArray.length-1)];
             this.anagram = this.randomOuter[randInt(0, this.randomOuter.length-1)];
             break;
           case '6':
-            this.outerArray = Object.values(anagrams)[1];
+            this.outerArray = Object.values(this.anagrams)[1];
             this.randomOuter = this.outerArray[randInt(0, this.outerArray.length-1)];
             this.anagram = this.randomOuter[randInt(0, this.randomOuter.length-1)];
             break;
           case '7':
-            this.outerArray = Object.values(anagrams)[2];
+            this.outerArray = Object.values(this.anagrams)[2];
             this.randomOuter = this.outerArray[randInt(0, this.outerArray.length-1)];
             this.anagram = this.randomOuter[randInt(0, this.randomOuter.length-1)];
             break;
           case '8':
-            this.outerArray = Object.values(anagrams)[3]
+            this.outerArray = Object.values(this.anagrams)[3]
             this.randomOuter = this.outerArray[randInt(0, this.outerArray.length-1)];
             this.anagram = this.randomOuter[randInt(0, this.randomOuter.length-1)];
             break;
-        }
+        } // You don't need a default statement
       },
 
       play() {
+        this.score = 0;
         this.screen = "play";
         this.startTimer();
         this.$nextTick(() => this.$refs.answer.focus());
+         // Deep Copy
+        this.anagrams = JSON.parse(JSON.stringify(Object.values(anagrams)));
         this.chooseAnagram();
       },
 
@@ -231,6 +211,9 @@
       },
       restart() {
         this.score = 0;
+         // Deep Copy
+        this.anagrams = JSON.parse(JSON.stringify(Object.values(anagrams)));
+        this.chooseAnagram();
         this.startTimer();
       },
 
