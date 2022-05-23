@@ -78,7 +78,6 @@
   import {randInt} from '../helpers/gameplay.js';
   export default {
     name: 'Main',
-
     components: {
       SelectInput,
       PlayButton,
@@ -109,7 +108,6 @@
       }
     },
     methods: {
-
       chooseAnagram() {
         if (this.outerArray.length === 0 && this.randomOuter.length === 0) {
           console.log("********** WINNER *********");
@@ -130,7 +128,6 @@
         // cheating => display remaining anagrams;
         console.log("cheating: " + this.randomOuter);
       },
-
       isAnagram() {
       if (this.randomOuter.includes(this.answer)) {
         this.anagramsGuessed.push(this.answer);
@@ -152,11 +149,9 @@
         this.answer = '';
         this.$nextTick(() => this.$refs.answer.focus());
       },
-
       config() {
         this.screen = "config";
       },
-
       chooseWordLength() {
         switch (this.maxNumber) {
           case '5':
@@ -181,7 +176,6 @@
             break;
         } // You don't need a default statement
       },
-
       play() {
         this.score = 0;
         this.screen = "play";
@@ -191,7 +185,6 @@
         this.anagrams = JSON.parse(JSON.stringify(Object.values(anagrams)));
         this.chooseAnagram();
       },
-
       clear() {
         this.input = '';
       },
@@ -216,7 +209,6 @@
         this.chooseAnagram();
         this.startTimer();
       },
-
     },
     computed: {
       numbers: function() {
@@ -236,7 +228,6 @@
     margin: auto;
     width: 380px;
   }
-
   button.number-button {
     border-radius: .25em;
     font-size: 3em;
@@ -245,7 +236,6 @@
     text-align: center;
     width: 2em;
   }
-
   #clear-button {
     border-radius: .25em;
     font-size: 3em;
@@ -258,15 +248,12 @@
   #scoreboard {
     font-size: 1.5em;
   }
-
   .big {
     font-size: 1.5em;
   }
-
   .huge {
     font-size: 5em;
   }
-
   .slide-leave-active,
   .slide-enter-active {
     position: absolute;
@@ -274,17 +261,14 @@
     transition: 1s;
     width: 380px;
   }
-
   .slide-enter {
     transform: translate(-100%, 0);
     transition: opacity .5s;
   }
-
   .slide-leave-to {
     opacity:0;
     transform: translate(100%, 0);
   }
-
   .slide-right-leave-active,
   .slide-right-enter-active {
     position: absolute;
@@ -292,12 +276,10 @@
     transition: 1s;
     width: 380px;
   }
-
   .slide-right-enter {
     transform: translate(100%, 0);
     transition: opacity .5s;
   }
-
   .slide-right-leave-to {
     opacity:0;
     transform: translate(-100%, 0);
