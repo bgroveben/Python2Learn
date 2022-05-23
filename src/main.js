@@ -8,7 +8,6 @@ import Login from './components/Login.vue'
 import Contact from './components/Contact.vue'
 import Home from './components/Home.vue'
 import MathFacts from './components/MathFacts.vue'
-// import Main from './components/Main'
 import AnagramHunt from './components/AnagramHunt.vue'
 
 const routes = [
@@ -18,16 +17,11 @@ const routes = [
   { path: '/contact', component: Contact },
   { path: '/games/math-facts', component: MathFacts },
   { path: '/games/anagram-hunt', component: AnagramHunt },
-  // { path: '/games/main', component: Main },
-
 ]
-
 const router = new VueRouter({
   routes
 })
-
 Vue.config.productionTip = false
-
 new Vue({
   render: h => h(App),
   router

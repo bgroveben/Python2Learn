@@ -1,7 +1,12 @@
 <template>
   <main id="main-container">
     <div v-if="screen === 'config'" id="config-container">
-      <h1>Mathificent</h1>
+      <h1 class="text-center">Math Facts</h1>
+        <ol id="instructions">
+            <li>Select Operation</li>
+            <li>Press Start</li>
+            <li>Solve as many problems as you can in 60 seconds.</li>
+        </ol>
       <SelectInput :currentValue="operation" label="Operation"
         id="operation" v-model="operation" :options="operations" />
       <SelectInput :currentValue="maxNumber" label="Maximum Number"

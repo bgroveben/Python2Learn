@@ -21,7 +21,7 @@ source[4] = "Pablo Picasso";
 statement[5] = '"The computer can\'t tell you the emotional story. It can give you the exact mathematical design."';
 source[5] = "Frank Zappa";
 
-setInterval(changeText, 1000);
+setInterval(changeText, 100);
 const quote = document.getElementById("quotes");
 let i = 0;
 function changeText(){

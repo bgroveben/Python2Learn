@@ -39,13 +39,13 @@
             <article class="col-sm col-md border rounded-3 border-warning mx-4 bg-primary bg-gradient bg-opacity-10" id="article1">
                 <h2>Math Facts</h2>
                 <p>This is a simple game for practicing addition, subtraction, multiplication, and division. The problem appears with a text field below it. Enter values using the keyboard or the buttons on the screen, and see how many problems you can solve in 30 seconds.</p>
-                <button class="btn btn-warning mb-2"><a href="games/math-facts.html">Play</a></button>
+                <button class="btn btn-warning mb-2"><router-link to="/games/math-facts" class="nav-link mx-3 fw-bold">Math Facts</router-link></button>
             </article>
 
             <article class="col-sm col-md border rounded-3 border-warning mx-4 bg-primary bg-gradient bg-opacity-10" id="article2">
                 <h2>Anagram Hunt</h2>
                 <p>An anagram is a word made by rearranging the letters of another word. For example, post, pots, opts, tops, and spot are all anagrams of stop. The object of the Anagram Hunt game is to find all the anagrams for a given word in 60 seconds.</p>
-                <button class="btn btn-warning mb-2"><a href="games/anagram-hunt.html">Play</a></button>
+                <button class="btn btn-warning mb-2"><router-link to="/games/anagram-hunt" class="nav-link mx-3 fw-bold">Anagram Hunt</router-link></button>
             </article>
         </section>
     </main>
