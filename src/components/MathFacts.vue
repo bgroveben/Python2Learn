@@ -48,8 +48,8 @@
                 :answered="answered" />
             </div>
             <div class="row" id="buttons">
-              <div class="col-3 mx-auto">
-                <button class="btn btn-primary number-button col-4 p-2 border border-dark border-4 rounded-circle fs-2"
+              <div class="col-3 mx-auto w-auto mt-2">
+                <button class="btn btn-primary col-4 p-2 border border-dark border-4 rounded-circle fs-2"
                   v-for="button in buttons" :key="button"
                   @click="setInput(button)">{{button}}</button>
                 <button class="btn btn-primary col-8 p-2 border border-dark border-4 rounded-circle fs-2" id="clear-button"

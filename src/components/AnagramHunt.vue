@@ -51,7 +51,7 @@
                 <div>
                   <div class="my-3">
                     <h3>Answer Here:</h3>
-                    <input type="text" class="form-control" v-model="answer" ref="answer" placeholder="Your Answer" aria-label="Answer" id="answer" aria-describedby="Answer" />
+                    <input type="text" class="col-3 fs-4" v-model="answer" ref="answer" placeholder="Your Answer" aria-label="Answer" id="answer" aria-describedby="Answer" />
                   </div>
                 </div>
                 <InputButton @is-anagram="isAnagram" />

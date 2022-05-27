@@ -2,9 +2,9 @@
   <div id="body">
     <div>
         <div class="row input-group">
-            <h4>Anagrams left: {{anagramsLeft}}</h4>
+            <h4 class="text-danger">Anagrams left: {{anagramsLeft}}</h4>
           <div class="row mt-3">
-            <h4>Anagrams guessed: {{anagramsGuessed}}</h4>
+            <h4 class="text-dark">Anagrams guessed: {{anagramsGuessed}}</h4>
           </div>
         </div>
     </div>   
