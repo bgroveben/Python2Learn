@@ -1,18 +1,18 @@
 <template>
 <main class="col-sm col-md border rounded-3 border-dark bg-primary bg-gradient bg-opacity-10 m-5 pb-5">
-  <h1 class="text-center mb-5 me-5">Registration and Login</h1>
-    <div class="row ms-5 mt-3">
-      <div class="col self-align-start ms-5">
-        <button class="btn btn-primary ms-5" data-bs-toggle="collapse" href="#collapseRegistration" aria-expanded="false" aria-controls="collapseRegistration">Need an account? Register here.</button>
+  <h1 class="text-center mx-5 me-5">Registration and Login</h1>
+    <div class="row mt-3">
+      <div class="col">
+        <button class="btn btn-primary" data-bs-toggle="collapse" href="#collapseRegistration" aria-expanded="false" aria-controls="collapseRegistration">Need an account? Register here.</button>
       </div>
-      <div class="col self-align-end ms-5">
-        <button class="btn btn-primary ms-5" data-bs-toggle="collapse" href="#collapseLogin" aria-expanded="false" aria-controls="collapseLogin">Have an account? Log in here.</button>
+      <div class="col">
+        <button class="btn btn-primary" data-bs-toggle="collapse" href="#collapseLogin" aria-expanded="false" aria-controls="collapseLogin">Have an account? Log in here.</button>
       </div>
     </div>
   <div class="row">
-    <div class="col ms-5 mt-5">
+    <div class="col mx-5">
       <div class="collapse multi-collapse" id="collapseRegistration">
-        <form id="registration-form" method="post" action="javascript:alert('Form Submitted')" novalidate>
+        <form id="registration-form" method="post" action="javascript:alert('Form Submitted')" class="form-control mt-2" novalidate>
           <h2>Register</h2>
           <div class="mb-3">
             <label for="register-username" class="form-label">Username:</label>
@@ -43,9 +43,8 @@
     </div>
     <div class="col">
       <div class="collapse multi-collapse" id="collapseLogin">
-        <form id="login-form" action="javascript:alert('Form Submitted')" method="post" novalidate>
-          <div class="m-5">
-            <h2 class="pb-4">Login</h2>
+        <form id="login-form" action="javascript:alert('Form Submitted')" method="post" class="form-control mt-2" novalidate>
+          <h2>Login</h2>
             <div class="mb-3">
               <label for="login-username" class="form-label">Username:</label>
               <input class="form-control" type="text" id="login-username" name="login-username" 
@@ -56,7 +55,6 @@
               <input class="form-control" type="password" name="login-password" id="login-password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters." required>
             </div>
             <button class="btn btn-success" name="submit" id="login-button">Log In</button>
-          </div>
         </form>
       </div>
     </div>

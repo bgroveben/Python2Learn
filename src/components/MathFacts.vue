@@ -3,12 +3,13 @@
     <div v-if="screen === 'config'" id="config-container" class="col-4 mx-auto">
       <h1 class="text-center mb-3">Math Facts</h1>
         <ol id="instructions">
-            <li class="h4">Select Operation</li>
-            <li class="h4">Press Start</li>
+            <li class="h4">Select Operation.</li>
+            <li class="h4">Choose Max Number.</li>
+            <li class="h4">Press Play.</li>
         </ol>
       <SelectInput :currentValue="operation" label="Operation"
         id="operation" v-model="operation" :options="operations" />
-      <SelectInput :currentValue="maxNumber" label="Maximum Number"
+      <SelectInput :currentValue="maxNumber" label="Max Number"
         id="max-number" v-model="maxNumber" :options="numbers" />
       <PlayButton @play-button-click="play" />
     </div>
@@ -33,7 +34,7 @@
       </transition>
       <transition name="slide-right">
         <template v-if="timeLeft > 0">
-          <div>
+          <div class="w-50 mx-auto">
             <div class="row border-bottom" id="scoreboard">
               <div class="col px-3 text-left fs-2">
                 <Score :score="score" />
@@ -49,10 +50,10 @@
             </div>
             <div class="row" id="buttons">
               <div class="col-3 mx-auto w-auto mt-2">
-                <button class="btn btn-primary col-4 p-2 border border-dark border-4 rounded-circle fs-2"
+                <button class="btn btn-primary col-4 p-1 border border-dark border-4 rounded-circle fs-2"
                   v-for="button in buttons" :key="button"
                   @click="setInput(button)">{{button}}</button>
-                <button class="btn btn-primary col-8 p-2 border border-dark border-4 rounded-circle fs-2" id="clear-button"
+                <button class="btn btn-primary col-8 p-1 border border-dark border-4 rounded-circle fs-2" id="clear-button"
                   @click="clear">CLEAR</button>
               </div>
             </div>

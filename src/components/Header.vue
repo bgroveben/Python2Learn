@@ -21,8 +21,8 @@
                   Games
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li class="nav-item"><router-link to="/games/math-facts" class="nav-link mx-3 fw-bold">Math Facts</router-link></li>
-                  <li class="nav-item"><router-link to="/games/anagram-hunt" class="nav-link mx-3 fw-bold">Anagram Hunt</router-link></li>
+                  <li class="nav-item"><router-link to="/games/math-facts" class="nav-link mx-1 fw-bold">Math Facts</router-link></li>
+                  <li class="nav-item"><router-link to="/games/anagram-hunt" class="nav-link mx-1 fw-bold">Anagram Hunt</router-link></li>
                 </ul>
               </li>
               <li class="nav-item"><router-link to="/contact" class="nav-link mx-3 fw-bold">Contact</router-link></li>

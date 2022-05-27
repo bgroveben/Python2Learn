@@ -1,7 +1,7 @@
 <template>
     <main>
-        <div>
-            <h2 class="ms-5 text-center">Contact Us</h2>
+        <div class="">
+            <h2 class="text-center">Contact Us</h2>
             <form id="contact-form" method="post" action="javascript:alert('Form Submitted')" class="mx-3 border rounded-3 border-secondary bg-primary bg-gradient bg-opacity-10" novalidate>
             <div class="col-6 ms-5 mt-3">
                 <label for="contactFormEmail" class="form-label">Email address:</label>
@@ -13,7 +13,7 @@
             </div>
             <div class="col-6 ms-5">
                 <label class="form-label" for="message">Message:</label>
-                <textarea class="form-control" name="message" id="message" cols="40" rows="4" required
+                <textarea class="form-control" name="message" id="message" cols="40" rows="3" required
                 minlength="1" maxlength="200"></textarea>
             </div>
             <button type="submit" class="btn btn-primary ms-5 my-3">Submit</button>

@@ -5,7 +5,7 @@
             <!--
             <section id="quotes"></section>
             -->
-            <div id="quotes-carousel" class="carousel slide mt-4" data-bs-ride="carousel" data-bs-pause="hover" data-bs-interval="7000">
+            <div id="quotes-carousel" class="carousel slide carousel-fade mt-4" data-bs-ride="carousel" data-bs-pause="hover" data-bs-interval="6000">
             <div class="carousel-inner">
                 <div class="carousel-item active bg-success bg-opacity-10 bg-gradient">
                 <h6>"We have to stop optimizing for programmers and start optimizing for users."</h6>
@@ -51,7 +51,7 @@
     </main>
 
 </template>
-<script src="helpers/index.js"></script>
+<!--<script src="helpers/index.js"></script>-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script>
   export default {

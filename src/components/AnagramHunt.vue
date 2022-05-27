@@ -3,9 +3,8 @@
     <div v-if="screen === 'config'" id="config-container" class="col-4 mx-auto">
       <h1 class="text-center mb-3">Anagram Hunt</h1>
       <ol>
-        <li class="h4">Choose word length.</li>
-        <li class="h4">Press Play button.</li>
-        <li class="h4">Find as many anagrams as you can.</li>
+        <li class="h4">Choose Word Length.</li>
+        <li class="h4">Press Play.</li>
       </ol>
       <SelectInput :currentValue="maxNumber" label="Word Length"
         id="max-number" v-model="maxNumber" :options="numbers" />
@@ -21,7 +20,7 @@
             <strong class="h3">Questions Correctly</strong>
             <button class="btn btn-success col-3 mx-auto d-grid gap-2 my-3 p-3 fs-5 rounded-circle"
               v-on:click="restart()">
-                Play Again with Same Settings
+                Play Again
             </button>
             <button class="btn btn-danger col-3 mx-auto d-grid gap-2 my-3 p-3 fs-5 rounded-circle"
               v-on:click="config()">
@@ -32,7 +31,7 @@
       </transition>
       <transition name="slide-right">
         <template v-if="timeLeft > 0">
-          <div>
+          <div class="w-50 mx-auto">
             <div class="row border-bottom" id="scoreboard">
               <div class="col px-3 text-left fs-2">
                 <Score :score="score" />
@@ -46,11 +45,11 @@
             </div>
             <div class="row border-bottom">
               <div class="col text-center">
-                <h3 class="fw-bold text-primary" id="anagram">{{anagram}}</h3>
-                <h3 class="fw-bold text-success" id="answer">{{answer}}</h3>
+                <h2 class="fw-bold text-primary fs-1" id="anagram">{{anagram}}</h2>
+                <h2 class="fw-bold text-secondary fs-1" id="answer">{{answer}}</h2>
                 <div>
                   <div class="my-3">
-                    <h3>Answer Here:</h3>
+                    <!--<h3>Answer Here:</h3>-->
                     <input type="text" class="col-3 fs-4" v-model="answer" ref="answer" placeholder="Your Answer" aria-label="Answer" id="answer" aria-describedby="Answer" />
                   </div>
                 </div>
@@ -124,29 +123,31 @@
          // remove displayed anagram from array
         this.randomOuter.splice(this.randomOuter.indexOf(this.anagram), 1);
         this.anagramsLeft = this.randomOuter.length;
-        // cheating => display remaining anagrams;
+        // cheating => display remaining anagrams;     enabled by default
         console.log("cheating: " + this.randomOuter);
+        // open your developer tools and check your console
       },
       isAnagram() {
-      if (this.randomOuter.includes(this.answer)) {
-        this.anagramsGuessed.push(this.answer);
-        // remove chosen answer from array 
-        this.randomOuter.splice(this.randomOuter.indexOf(this.answer), 1); 
-        this.score++;
-        this.answer = '';
-        this.$nextTick(() => this.$refs.answer.focus());
-        this.anagramsLeft -= 1;
-         // also cheating
-        console.log("cheating: " + this.randomOuter);
-      }
-      if (this.randomOuter.length < 1) {
-        this.chooseAnagram();
-        this.answer = '';
-        this.$nextTick(() => this.$refs.answer.focus());
-        this.anagramsGuessed = [];
-      }
-        this.answer = '';
-        this.$nextTick(() => this.$refs.answer.focus());
+        this.answer = this.answer.toLowerCase();
+        if (this.randomOuter.includes(this.answer)) {
+          this.anagramsGuessed.push(this.answer);
+          // remove chosen answer from array 
+          this.randomOuter.splice(this.randomOuter.indexOf(this.answer), 1); 
+          this.score++;
+          this.answer = '';
+          this.$nextTick(() => this.$refs.answer.focus());
+          this.anagramsLeft -= 1;
+          // cheating()
+          console.log("cheating: " + this.randomOuter);
+        }
+        if (this.randomOuter.length < 1) {
+          this.chooseAnagram();
+          this.answer = '';
+          this.$nextTick(() => this.$refs.answer.focus());
+          this.anagramsGuessed = [];
+        }
+          this.answer = '';
+          this.$nextTick(() => this.$refs.answer.focus());
       },
       config() {
         this.screen = "config";
