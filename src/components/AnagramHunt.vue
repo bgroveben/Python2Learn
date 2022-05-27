@@ -1,13 +1,13 @@
 <template>
   <main id="main-container">
-    <div v-if="screen === 'config'" id="config-container">
+    <div v-if="screen === 'config'" id="config-container" class="col-4 mx-auto">
       <h1 class="text-center mb-3">Anagram Hunt</h1>
       <ol>
-        <li>Choose word length.</li>
-        <li>Press Play button.</li>
-        <li>Find as many anagrams as you can.</li>
+        <li class="h4">Choose word length.</li>
+        <li class="h4">Press Play button.</li>
+        <li class="h4">Find as many anagrams as you can.</li>
       </ol>
-      <SelectInput :currentValue="maxNumber" label="Choose Word Length"
+      <SelectInput :currentValue="maxNumber" label="Word Length"
         id="max-number" v-model="maxNumber" :options="numbers" />
       <PlayButton @play-button-click="play" />
     </div>
@@ -15,17 +15,15 @@
       <transition name="slide">
         <template v-if="timeLeft === 0">
           <div>
-            <h2>Time's Up!</h2>
-            <strong class="big">You Answered</strong>
-            <div class="huge">
-              {{score}}
-            </div>
-            <strong class="big">Questions Correctly</strong>
-            <button class="btn btn-primary form-control m-1"
+            <h2 class="fs-1">Time's Up!</h2>
+            <strong class="h3">You Answered</strong>
+            <div class="display-2">{{score}}</div>
+            <strong class="h3">Questions Correctly</strong>
+            <button class="btn btn-success col-3 mx-auto d-grid gap-2 my-3 p-3 fs-5 rounded-circle"
               v-on:click="restart()">
                 Play Again with Same Settings
             </button>
-            <button class="btn btn-secondary form-control m-1"
+            <button class="btn btn-danger col-3 mx-auto d-grid gap-2 my-3 p-3 fs-5 rounded-circle"
               v-on:click="config()">
                 Change Settings
             </button>
@@ -36,14 +34,14 @@
         <template v-if="timeLeft > 0">
           <div>
             <div class="row border-bottom" id="scoreboard">
-              <div class="col px-3 text-left">
+              <div class="col px-3 text-left fs-2">
                 <Score :score="score" />
               </div>
-              <div class="col px-3 text-right">
+              <div class="col px-3 text-right fs-2">
                 <Timer :timeLeft="timeLeft" />
               </div>
             </div>
-            <div class="mt-3">
+            <div class="mt-3 fs-1">
               <h3>Anagram:</h3>
             </div>
             <div class="row border-bottom">

@@ -1,10 +1,10 @@
 <template>
   <main id="main-container">
     <div v-if="screen === 'config'" id="config-container" class="col-4 mx-auto">
-      <h1 class="text-center">Math Facts</h1>
-        <ol id="instructions" class="text-center">
-            <li class="h5">Select Operation</li>
-            <li class="h5">Press Start</li>
+      <h1 class="text-center mb-3">Math Facts</h1>
+        <ol id="instructions">
+            <li class="h4">Select Operation</li>
+            <li class="h4">Press Start</li>
         </ol>
       <SelectInput :currentValue="operation" label="Operation"
         id="operation" v-model="operation" :options="operations" />
@@ -42,7 +42,7 @@
                 <Timer :timeLeft="timeLeft" />
               </div>
             </div>
-            <div :class="equationClass" id="equation" class="fs-1">
+            <div :class="equationClass" id="equation">
               <Equation :question="question"
                 :answer="input"
                 :answered="answered" />
