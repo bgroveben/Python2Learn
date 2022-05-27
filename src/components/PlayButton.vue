@@ -1,6 +1,7 @@
 <template>
-  <div class="row mx-1 mb-3 mt-5">
-    <button class="form-control btn btn-primary" @click="$emit('play-button-click')">
+  <!--<div class="row mx-1 mb-3 mt-5">-->
+  <div class="row">
+    <button class="btn btn-success col-6 mx-auto d-grid gap-2 my-3 p-3 fs-3 rounded-circle" @click="$emit('play-button-click')">
       Play!
     </button>
   </div>

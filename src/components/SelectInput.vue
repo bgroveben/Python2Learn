@@ -1,6 +1,6 @@
 <template>
   <div class="row mx-1 my-3">
-    <label :for="id" class="col font-weight-bold">{{label}}</label>
+    <label :for="id" class="col font-weight-bold text-end fs-5">{{label}}</label>
     <select class="col form-control" :id="id" :value="currentValue"
         @input="$emit('input', $event.target.value)">
       <option v-for="option in options" :key="option[1]"

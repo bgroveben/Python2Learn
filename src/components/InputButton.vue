@@ -1,6 +1,6 @@
 <template>
-  <div class="row mx-1 mb-3 mt-5">
-    <button class="form-control btn btn-primary" @click="$emit('is-anagram')">
+  <div class="row">
+    <button class="btn btn-success col-3 mx-auto d-grid gap-2 my-2 p-2 fs-5" @click="$emit('is-anagram')">
       Enter
     </button>
   </div>

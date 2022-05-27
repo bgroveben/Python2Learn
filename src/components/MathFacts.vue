@@ -1,11 +1,10 @@
 <template>
   <main id="main-container">
-    <div v-if="screen === 'config'" id="config-container">
+    <div v-if="screen === 'config'" id="config-container" class="col-4 mx-auto">
       <h1 class="text-center">Math Facts</h1>
-        <ol id="instructions">
-            <li>Select Operation</li>
-            <li>Press Start</li>
-            <li>Solve as many problems as you can in 60 seconds.</li>
+        <ol id="instructions" class="text-center">
+            <li class="h5">Select Operation</li>
+            <li class="h5">Press Start</li>
         </ol>
       <SelectInput :currentValue="operation" label="Operation"
         id="operation" v-model="operation" :options="operations" />
@@ -17,15 +16,15 @@
       <transition name="slide">
         <template v-if="timeLeft === 0">
           <div>
-            <h2>Time's Up!</h2>
-            <strong class="big">You Answered</strong>
-            <div class="huge">{{score}}</div>
-            <strong class="big">Questions Correctly</strong>
-            <button class="btn btn-primary form-control m-1"
+            <h2 class="fs-1">Time's Up!</h2>
+            <strong class="h3">You Answered</strong>
+            <div class="display-2">{{score}}</div>
+            <strong class="h3">Questions Correctly</strong>
+            <button class="btn btn-success col-3 mx-auto d-grid gap-2 my-3 p-3 fs-5 rounded-circle"
               v-on:click="restart()">
                 Play Again with Same Settings
             </button>
-            <button class="btn btn-secondary form-control m-1"
+            <button class="btn btn-danger col-3 mx-auto d-grid gap-2 my-3 p-3 fs-5 rounded-circle"
               v-on:click="config()">
                 Change Settings
             </button>
@@ -36,25 +35,25 @@
         <template v-if="timeLeft > 0">
           <div>
             <div class="row border-bottom" id="scoreboard">
-              <div class="col px-3 text-left">
+              <div class="col px-3 text-left fs-2">
                 <Score :score="score" />
               </div>
-              <div class="col px-3 text-right">
+              <div class="col px-3 text-right fs-2">
                 <Timer :timeLeft="timeLeft" />
               </div>
             </div>
-            <div :class="equationClass" id="equation">
+            <div :class="equationClass" id="equation" class="fs-1">
               <Equation :question="question"
                 :answer="input"
                 :answered="answered" />
             </div>
             <div class="row" id="buttons">
-              <div class="col">
-                <button class="btn btn-primary number-button"
+              <div class="col-3 mx-auto">
+                <button class="btn btn-primary number-button col-4 p-2 border border-dark border-4 rounded-circle fs-2"
                   v-for="button in buttons" :key="button"
                   @click="setInput(button)">{{button}}</button>
-                <button class="btn btn-primary" id="clear-button"
-                  @click="clear">Clear</button>
+                <button class="btn btn-primary col-8 p-2 border border-dark border-4 rounded-circle fs-2" id="clear-button"
+                  @click="clear">CLEAR</button>
               </div>
             </div>
           </div>
