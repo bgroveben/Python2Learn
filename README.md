@@ -1,29 +1,3 @@
-# mathificent
+# Python2Learn
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### In this project, you will use your new knowledge of Python to create Python versions of the two Play2Learn games (Anagram Hunt and Math Facts Practice) that can be played from the console.
