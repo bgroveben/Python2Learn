@@ -37,8 +37,10 @@ The game should end when the time runs out:
 """
 import random
 
+
 def valid_op(s):
-    return s in ['+','-','x','/']
+    return s in ['+','-','x','/','//']
+
 
 def choose_operation():
     # When you run anagram_hunt.py in the console, you should be prompted to enter a word length:
@@ -49,8 +51,6 @@ def choose_operation():
     print(operation)
     return operation
 
-choose_operation()
-
 
 def valid_num(n):
     # If an invalid number is entered, you should get an error message and another prompt.
@@ -59,13 +59,63 @@ def valid_num(n):
     else:
         return False
 
+
 def set_max_num():
     # As soon as you enter a correct operation, you should be prompted for a max number
     max_num = input("Please enter a max number between 1 and 100:")
     while not valid_num(max_num):
         max_num = input("That is not a valid entry. Choose a number between 1 and 100:")
-    print(max_num)
-    return max_num
+    return int(max_num)
 
 
-set_max_num()
+def do_math(x, operation, y):
+    if operation == '+':
+        result = x + y
+    elif operation == '-':
+        result = x - y
+    elif operation == 'x':
+        result =  x * y
+    elif operation == '/':
+        """
+        Please enter a max number between 1 and 100:99
+        >>>1.0416666666666667
+        >>>1.0, CH3@T3R ;)
+        >>>50 / 48 = ?: 1
+        >>>right
+        ???
+        """
+        # Only return numbers with no remainder using modulo
+        #if max(x,y) % min(x,y) == 0:
+        #while max(x,y) % min(x,y) != 0:
+        result = max(x,y) / min(x,y)
+        #else:
+            #x = random.randint(1, set_max_num)
+            #y = random.randint(1, set_max_num)
+
+    print(result)
+    return result
+
+
+def get_results():
+    answer = float(input(f"{x} {choose_operation} {y} = ?: "))
+    if answer == round(do_math,1):
+        results = "right"
+        # score +=1
+    elif answer == float(round(do_math,1)) or answer == int(round(do_math,1)):
+        results = "int or float"
+    else:
+        results = "wrong" # + timer
+    print(results)
+
+
+# Put the following in a main function
+choose_operation = choose_operation()
+set_max_num = set_max_num()
+x = random.randint(1, set_max_num)
+y = random.randint(1, set_max_num)
+x,y = max(x,y),min(x,y)
+do_math = do_math(x, choose_operation, y)
+# sanity check
+cheater = round(do_math,1)
+print(f"{cheater}, CH3@T3R ;) ")
+get_results()
