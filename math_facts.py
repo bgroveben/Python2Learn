@@ -87,6 +87,7 @@ def do_math(x, operation, y):
         # Only return numbers with no remainder using modulo
         #if max(x,y) % min(x,y) == 0:
         #while max(x,y) % min(x,y) != 0:
+        #result = divmod(max(x,y), min(x,y)) -- returns tuple
         result = max(x,y) / min(x,y)
         #else:
             #x = random.randint(1, set_max_num)

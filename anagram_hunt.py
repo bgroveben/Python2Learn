@@ -57,6 +57,20 @@ If the time is already up when you submit an answer, you should get a message li
 >>>Press Enter to play again.
 
 """
+import time
+import json
+
+
+def game_timer(time_left):
+    # works, but needs to run in the background
+    while time_left:
+        mins, secs = divmod(time_left, 60)
+        time_format = "{:02d}:{:02d}".format(mins, secs)
+        print(time_format, end='\r')
+        time.sleep(1)
+        time_left -= 1
+    print("Game Over")
+
 
 def valid_len(n):
     if n.isnumeric():
@@ -64,14 +78,29 @@ def valid_len(n):
     else:
         return False
 
+
 def set_word_length():
     # When you run anagram_hunt.py in the console, you should be prompted to enter a word length:
+    global word_length
     word_length = input("Please enter a word length [5, 6, 7, 8]:")
     # If you do not enter a correct word length, you should get an error message and a prompt to enter a word length again:
     while not valid_len(word_length):
         word_length = input("That is not an option. Please enter a word length [5, 6, 7, 8]:")
     print(word_length)
+    game_timer(3) #seconds
     return word_length
 
 
 set_word_length()
+
+
+def read_anagrams(word_length):
+    # read file
+    with open('data/anagrams.json', 'r') as f:
+        data = f.read()
+    # parse file
+    anagrams = json.loads(data)
+    print(anagrams[str(word_length)])
+
+
+read_anagrams(word_length)
