@@ -59,6 +59,7 @@ If the time is already up when you submit an answer, you should get a message li
 """
 import time
 import json
+import random
 
 
 def game_timer(time_left):
@@ -95,12 +96,31 @@ set_word_length()
 
 
 def read_anagrams(word_length):
-    # read file
+    """
+    Randomly chooses a list of the user's chosen length and removes each word and list until the list of lists is empty.
+    TODO:
+    Compare user input to chosen word. If input matches a word in the inner list, remove it.
+    Don't forget about the timer.
+    """
     with open('data/anagrams.json', 'r') as f:
         data = f.read()
-    # parse file
     anagrams = json.loads(data)
-    print(anagrams[str(word_length)])
+    outer_list = anagrams[str(word_length)]
+    print(outer_list)
+    for l in range(len(outer_list)):
+        random_inner = outer_list[random.randrange(len(outer_list))]
+        for w in range(len(random_inner)):
+            print(random_inner)
+            print(len(random_inner))
+            print()
+            random_word = random_inner[random.randrange(len(random_inner))]
+            print(random_word)
+            random_inner.remove(random_word)
+            # if user input == w, increment score and add w to anagrams guessed
+            print()
+        outer_list.remove(random_inner)
+        print()
+    print(outer_list)
 
 
 read_anagrams(word_length)
