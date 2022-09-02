@@ -63,14 +63,7 @@ import random
 
 
 def game_timer(time_left):
-    # works, but needs to run in the background
-    while time_left:
-        mins, secs = divmod(time_left, 60)
-        time_format = "{:02d}:{:02d}".format(mins, secs)
-        print(time_format, end='\r')
-        time.sleep(1)
-        time_left -= 1
-    print("Game Over")
+    pass
 
 
 def valid_len(n):
@@ -88,7 +81,7 @@ def set_word_length():
     while not valid_len(word_length):
         word_length = input("That is not an option. Please enter a word length [5, 6, 7, 8]:")
     print(word_length)
-    game_timer(3) #seconds
+    game_timer(20) #seconds
     return word_length
 
 
@@ -106,21 +99,38 @@ def read_anagrams(word_length):
         data = f.read()
     anagrams = json.loads(data)
     outer_list = anagrams[str(word_length)]
-    print(outer_list)
+    #print(outer_list)
+    score = 0
     for l in range(len(outer_list)):
         random_inner = outer_list[random.randrange(len(outer_list))]
-        for w in range(len(random_inner)):
-            print(random_inner)
-            print(len(random_inner))
+        random_word = random_inner[random.randrange(len(random_inner))]
+        anagrams_guessed = []
+        anagrams_guessed.append(random_word)
+        while len(random_inner) > 1:
+            print("random_word : " + random_word)
             print()
-            random_word = random_inner[random.randrange(len(random_inner))]
-            print(random_word)
-            random_inner.remove(random_word)
-            # if user input == w, increment score and add w to anagrams guessed
-            print()
+            user_input = input("Choose a word: ")
+            if user_input in anagrams_guessed:
+                print("Already guessed")
+            elif user_input in random_inner:
+                anagrams_guessed.append(user_input)
+                print("anagrams_guessed: ")
+                print(anagrams_guessed)
+                print()
+                random_inner.remove(user_input)
+                print("random_inner: ")
+                print(random_inner)
+                print()
+                score += 1
+                print("Score : " + str(score))
+                print()
+            else:
+                print("Not an anagram")
         outer_list.remove(random_inner)
         print()
-    print(outer_list)
+        print("outer_list:")
+        print(outer_list)
+        print()
 
 
 read_anagrams(word_length)
