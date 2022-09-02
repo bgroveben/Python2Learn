@@ -62,10 +62,6 @@ import json
 import random
 
 
-def game_timer(time_left):
-    pass
-
-
 def valid_len(n):
     if n.isnumeric():
         return int(n) in range(5,9)
@@ -81,11 +77,17 @@ def set_word_length():
     while not valid_len(word_length):
         word_length = input("That is not an option. Please enter a word length [5, 6, 7, 8]:")
     print(word_length)
-    game_timer(20) #seconds
     return word_length
 
 
-set_word_length()
+def play_again():
+    replay = input("Play again? y/n ")
+    if replay == "y":
+        play_game()
+    elif replay == "n":
+        print("Goodbye")
+    else:
+        print("I don't get it. Goodbye")
 
 
 def read_anagrams(word_length):
@@ -99,18 +101,39 @@ def read_anagrams(word_length):
         data = f.read()
     anagrams = json.loads(data)
     outer_list = anagrams[str(word_length)]
-    #print(outer_list)
+    return outer_list
+
+
+def play_game():
+    """As soon as you enter a correct word length, the game should start"""
+    set_word_length()
+    outer_list = read_anagrams(word_length)
     score = 0
+    start = time.time()
+    """A timer should start counting down from 60 by 1 every second."""
+    game_length = 10
     for l in range(len(outer_list)):
         random_inner = outer_list[random.randrange(len(outer_list))]
         random_word = random_inner[random.randrange(len(random_inner))]
         anagrams_guessed = []
         anagrams_guessed.append(random_word)
         while len(random_inner) > 1:
-            print("random_word : " + random_word)
-            print()
-            user_input = input("Choose a word: ")
-            if user_input in anagrams_guessed:
+            print("Anagrams for : " + random_word)
+            """Every time a message is logged to the console, the value of the timer should be checked and displayed."""
+            user_input = input("Enter a word: ")
+            time_check = time.time()
+            print("Time Elapsed: " + str(time.time() - start))
+            if time.time() - start >= game_length:
+                print()
+                print("Time's Up")
+                print()
+                print("Final Score : " + str(score))
+                print()
+                play_again()
+                return None
+            elif user_input == random_word:
+                print("That's the word you were given")
+            elif user_input in anagrams_guessed:
                 print("Already guessed")
             elif user_input in random_inner:
                 anagrams_guessed.append(user_input)
@@ -127,10 +150,10 @@ def read_anagrams(word_length):
             else:
                 print("Not an anagram")
         outer_list.remove(random_inner)
-        print()
-        print("outer_list:")
-        print(outer_list)
-        print()
+    print()
+    print("outer_list:")
+    print(outer_list)
+    print()
 
 
-read_anagrams(word_length)
+play_game()
