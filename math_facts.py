@@ -77,39 +77,33 @@ def do_math(x, operation, y):
         result =  x * y
     elif operation == '/':
         """
-        Please enter a max number between 1 and 100:99
-        >>>1.0416666666666667
-        >>>1.0, CH3@T3R ;)
-        >>>50 / 48 = ?: 1
-        >>>right
-        ???
+        >>>Please enter a max number between 1 and 100:100
+        >>>2.6944444444444446
+        >>>2.7, CH3@T3R ;)
+        >>>97 / 36 = ?: 2.7
+        >>>Correct!
         """
-        # Only return numbers with no remainder using modulo
-        #if max(x,y) % min(x,y) == 0:
-        #while max(x,y) % min(x,y) != 0:
-        #result = divmod(max(x,y), min(x,y)) -- returns tuple
-        result = max(x,y) / min(x,y)
-        #else:
-            #x = random.randint(1, set_max_num)
-            #y = random.randint(1, set_max_num)
+        # Try something more elegant:
+        result = x / y
 
     print(result)
     return result
 
 
-def get_results():
-    answer = float(input(f"{x} {choose_operation} {y} = ?: "))
+def get_results(answer):
+    try:
+        answer = float(input(f"{x} {choose_operation} {y} = ?: "))
+    except ValueError:
+        print("Numbers only, please.")
+        get_results(answer)
     if answer == round(do_math,1):
-        results = "right"
-        # score +=1
-    elif answer == float(round(do_math,1)) or answer == int(round(do_math,1)):
-        results = "int or float"
+        print("Correct!")
+        get_results(answer)
     else:
-        results = "wrong" # + timer
-    print(results)
+        print(f"{answer} is not correct. Try again.")
+        get_results(answer)
 
 
-# Put the following in a main function
 choose_operation = choose_operation()
 set_max_num = set_max_num()
 x = random.randint(1, set_max_num)
@@ -119,4 +113,4 @@ do_math = do_math(x, choose_operation, y)
 # sanity check
 cheater = round(do_math,1)
 print(f"{cheater}, CH3@T3R ;) ")
-get_results()
+get_results(do_math)
