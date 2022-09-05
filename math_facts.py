@@ -39,7 +39,7 @@ import random
 
 
 def valid_op(s):
-    return s in ['+','-','x','/','//']
+    return s in ['+','-','x','/']
 
 
 def choose_operation():
@@ -55,7 +55,7 @@ def choose_operation():
 def valid_num(n):
     # If an invalid number is entered, you should get an error message and another prompt.
     if n.isnumeric():
-        return int(n) in range(1,101)
+        return float(n) in range(1,101)
     else:
         return False
 
@@ -70,12 +70,16 @@ def set_max_num():
 
 def do_math(x, operation, y):
     if operation == '+':
-        result = x + y
+        result = int(x + y)
     elif operation == '-':
-        result = x - y
+        x,y = max(x,y),min(x,y)
+        result = int(x - y)
     elif operation == 'x':
-        result =  x * y
+        result =  int(x * y)
     elif operation == '/':
+        # Try something more elegant:
+        x,y = max(x,y),min(x,y)
+        result = x / y
         """
         >>>Please enter a max number between 1 and 100:100
         >>>2.6944444444444446
@@ -83,34 +87,31 @@ def do_math(x, operation, y):
         >>>97 / 36 = ?: 2.7
         >>>Correct!
         """
-        # Try something more elegant:
-        result = x / y
-
+    result = round(result,1)
     print(result)
-    return result
-
-
-def get_results(answer):
     try:
         answer = float(input(f"{x} {choose_operation} {y} = ?: "))
     except ValueError:
-        print("Numbers only, please.")
-        get_results(answer)
-    if answer == round(do_math,1):
+        print("Please enter a number.")
+        do_math(x, operation, y)
+    if answer == result:
         print("Correct!")
-        get_results(answer)
+        x = random.randint(1, set_max_num)
+        y = random.randint(1, set_max_num)
+        do_math(x, choose_operation, y)
     else:
-        print(f"{answer} is not correct. Try again.")
-        get_results(answer)
+        print(f"{int(answer)} is not correct. Try again.")
+        do_math(x, operation, y)
 
 
-choose_operation = choose_operation()
-set_max_num = set_max_num()
-x = random.randint(1, set_max_num)
-y = random.randint(1, set_max_num)
-x,y = max(x,y),min(x,y)
-do_math = do_math(x, choose_operation, y)
-# sanity check
-cheater = round(do_math,1)
-print(f"{cheater}, CH3@T3R ;) ")
-get_results(do_math)
+def main():
+    global choose_operation
+    choose_operation = choose_operation()
+    global set_max_num
+    set_max_num = set_max_num()
+    x = random.randint(1, set_max_num)
+    y = random.randint(1, set_max_num)
+    do_math(x, choose_operation, y)
+
+
+main()
