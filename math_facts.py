@@ -68,7 +68,7 @@ def set_max_num():
     return int(max_num)
 
 
-def do_math(x, operation, y):
+def do_math(x, operation, y, score):
     if operation == '+':
         result = int(x + y)
     elif operation == '-':
@@ -93,15 +93,17 @@ def do_math(x, operation, y):
         answer = float(input(f"{x} {choose_operation} {y} = ?: "))
     except ValueError:
         print("Please enter a number.")
-        do_math(x, operation, y)
+        do_math(x, choose_operation, y, score)
     if answer == result:
         print("Correct!")
+        score += 1
+        print("Score: " + str(score))
         x = random.randint(1, set_max_num)
         y = random.randint(1, set_max_num)
-        do_math(x, choose_operation, y)
+        do_math(x, choose_operation, y, score)
     else:
         print(f"{int(answer)} is not correct. Try again.")
-        do_math(x, operation, y)
+        do_math(x, choose_operation, y, score)
 
 
 def main():
@@ -109,9 +111,11 @@ def main():
     choose_operation = choose_operation()
     global set_max_num
     set_max_num = set_max_num()
+    global score
+    score = 0
     x = random.randint(1, set_max_num)
     y = random.randint(1, set_max_num)
-    do_math(x, choose_operation, y)
+    do_math(x, choose_operation, y, score)
 
 
 main()
