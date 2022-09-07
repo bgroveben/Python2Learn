@@ -36,6 +36,7 @@ The game should end when the time runs out:
 >>>Press Enter to play again.
 """
 import random
+import time
 
 
 def valid_op(s):
@@ -69,41 +70,51 @@ def set_max_num():
 
 
 def do_math(x, operation, y, score):
-    if operation == '+':
-        result = int(x + y)
-    elif operation == '-':
-        x,y = max(x,y),min(x,y)
-        result = int(x - y)
-    elif operation == 'x':
-        result =  int(x * y)
-    elif operation == '/':
-        # Try something more elegant:
-        x,y = max(x,y),min(x,y)
-        result = x / y
-        """
-        >>>Please enter a max number between 1 and 100:100
-        >>>2.6944444444444446
-        >>>2.7, CH3@T3R ;)
-        >>>97 / 36 = ?: 2.7
-        >>>Correct!
-        """
-    result = round(result,1)
-    print(result)
-    try:
-        answer = float(input(f"{x} {choose_operation} {y} = ?: "))
-    except ValueError:
-        print("Please enter a number.")
-        do_math(x, choose_operation, y, score)
-    if answer == result:
-        print("Correct!")
-        score += 1
-        print("Score: " + str(score))
-        x = random.randint(1, set_max_num)
-        y = random.randint(1, set_max_num)
-        do_math(x, choose_operation, y, score)
-    else:
-        print(f"{int(answer)} is not correct. Try again.")
-        do_math(x, choose_operation, y, score)
+    game_length = 10
+    while time.time() - start < game_length-1:
+        if operation == '+':
+            result = int(x + y)
+        elif operation == '-':
+            x,y = max(x,y),min(x,y)
+            result = int(x - y)
+        elif operation == 'x':
+            result =  int(x * y)
+        elif operation == '/':
+            # Try something more elegant:
+            x,y = max(x,y),min(x,y)
+            result = x / y
+            """
+            >>>Please enter a max number between 1 and 100:100
+            >>>2.6944444444444446
+            >>>2.7, CH3@T3R ;)
+            >>>97 / 36 = ?: 2.7
+            >>>Correct!
+            """
+        print()
+        print("Time left: " + str(round(game_length - (time.time() - start))))
+        result = round(result,1)
+        print(result)
+        try:
+            answer = float(input(f"{x} {choose_operation} {y} = ?: "))
+        except ValueError:
+            print("Please enter a number.")
+            do_math(x, choose_operation, y, score)
+        try:
+            if time.time() - start > game_length-1:
+                print("Time's Up")
+            elif answer == result:
+                print("Correct!")
+                score += 1
+                print("Score: " + str(score))
+                x = random.randint(1, set_max_num)
+                y = random.randint(1, set_max_num)
+                do_math(x, choose_operation, y, score)
+            else:
+                print(f"{int(answer)} is not correct. Try again.")
+                do_math(x, choose_operation, y, score)
+        except UnboundLocalError:
+            break
+        break
 
 
 def main():
@@ -113,6 +124,8 @@ def main():
     set_max_num = set_max_num()
     global score
     score = 0
+    global start
+    start = time.time()
     x = random.randint(1, set_max_num)
     y = random.randint(1, set_max_num)
     do_math(x, choose_operation, y, score)

@@ -118,6 +118,10 @@ def play_game():
         anagrams_guessed = []
         anagrams_guessed.append(random_word)
         while len(random_inner) > 1:
+            print()
+            print("random_inner: ")
+            print(random_inner)
+            print()
             print("Anagrams for : " + random_word)
             """Every time a message is logged to the console, the value of the timer should be checked and displayed."""
             user_input = input("Enter a word: ")
@@ -141,8 +145,6 @@ def play_game():
                 print(anagrams_guessed)
                 print()
                 random_inner.remove(user_input)
-                print("random_inner: ")
-                print(random_inner)
                 print()
                 score += 1
                 print("Score : " + str(score))
