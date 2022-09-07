@@ -97,11 +97,21 @@ def do_math(x, operation, y, score):
         try:
             answer = float(input(f"{x} {choose_operation} {y} = ?: "))
         except ValueError:
-            print("Please enter a number.")
-            do_math(x, choose_operation, y, score)
+            if time.time() - start > game_length-1:
+                print("Time's Up")
+                print("Sorry, the last one doesn't count.")
+                print("Time Elapsed: " + str(time.time() - start))
+                print("Final Score : " + str(score))
+                break
+            else:
+                print("Please enter a number.")
+                continue
         try:
             if time.time() - start > game_length-1:
                 print("Time's Up")
+                print("Sorry, the last one doesn't count.")
+                print("Time Elapsed: " + str(time.time() - start))
+                print("Final Score : " + str(score))
             elif answer == result:
                 print("Correct!")
                 score += 1
