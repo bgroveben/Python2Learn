@@ -83,40 +83,19 @@ def do_math(x, operation, y, score):
             # Try something more elegant:
             x,y = max(x,y),min(x,y)
             result = x / y
-            """
-            >>>Please enter a max number between 1 and 100:100
-            >>>2.6944444444444446
-            >>>2.7, CH3@T3R ;)
-            >>>97 / 36 = ?: 2.7
-            >>>Correct!
-            """
+
         print()
-        #print("Time Elapsed: " + str(round(time.time() - start)))
-        print("Time left: " + str(round(game_length - (time.time() - start))))
-        result = round(result,1)
+        result = round(result,1) # Answer to cheat, or sanity check
         print(result)
+        print()
         try:
+            print("Time left: " + str(round(game_length - (time.time() - start))))
             answer = float(input(f"{x} {choose_operation} {y} = ?: "))
-        except ValueError:
             if time.time() - start > game_length:
                 print("Time's Up")
                 print("Sorry, the last one doesn't count.")
-                #print("Time Elapsed: " + str(round(time.time() - start)))
-                #print("Time left: " + str(round(game_length - (time.time() - start))))
-                print("Final Score : " + str(score))
-                break
-            else:
-                print("Please enter a number.")
-                continue
-        try:
-            if time.time() - start > game_length:
-                print("Time's Up")
-                print("Sorry, the last one doesn't count.")
-                #print("Time Elapsed: " + str(round(time.time() - start)))
-                #print("Time left: " + str(round(game_length - (time.time() - start))))
                 print("Final Score : " + str(score))
             elif answer == result:
-                #print("Time Elapsed: " + str(round(time.time() - start)))
                 print("Time left: " + str(round(game_length - (time.time() - start))))
                 print("Correct!")
                 score += 1
@@ -129,7 +108,16 @@ def do_math(x, operation, y, score):
                 do_math(x, choose_operation, y, score)
         except UnboundLocalError:
             break
-        break
+        except ValueError:
+            if time.time() - start > game_length:
+                print("Time's Up")
+                print("Sorry, the last one doesn't count.")
+                print("Final Score : " + str(score))
+                break
+            else:
+                print("Please enter a number.")
+                continue
+        break # break while loop, if necessary
 
 
 def main():
