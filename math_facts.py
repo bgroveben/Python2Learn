@@ -71,7 +71,7 @@ def set_max_num():
 
 def do_math(x, operation, y, score):
     game_length = 10
-    while time.time() - start < game_length-1:
+    while time.time() - start < game_length:
         if operation == '+':
             result = int(x + y)
         elif operation == '-':
@@ -91,28 +91,33 @@ def do_math(x, operation, y, score):
             >>>Correct!
             """
         print()
+        #print("Time Elapsed: " + str(round(time.time() - start)))
         print("Time left: " + str(round(game_length - (time.time() - start))))
         result = round(result,1)
         print(result)
         try:
             answer = float(input(f"{x} {choose_operation} {y} = ?: "))
         except ValueError:
-            if time.time() - start > game_length-1:
+            if time.time() - start > game_length:
                 print("Time's Up")
                 print("Sorry, the last one doesn't count.")
-                print("Time Elapsed: " + str(time.time() - start))
+                #print("Time Elapsed: " + str(round(time.time() - start)))
+                #print("Time left: " + str(round(game_length - (time.time() - start))))
                 print("Final Score : " + str(score))
                 break
             else:
                 print("Please enter a number.")
                 continue
         try:
-            if time.time() - start > game_length-1:
+            if time.time() - start > game_length:
                 print("Time's Up")
                 print("Sorry, the last one doesn't count.")
-                print("Time Elapsed: " + str(time.time() - start))
+                #print("Time Elapsed: " + str(round(time.time() - start)))
+                #print("Time left: " + str(round(game_length - (time.time() - start))))
                 print("Final Score : " + str(score))
             elif answer == result:
+                #print("Time Elapsed: " + str(round(time.time() - start)))
+                print("Time left: " + str(round(game_length - (time.time() - start))))
                 print("Correct!")
                 score += 1
                 print("Score: " + str(score))
