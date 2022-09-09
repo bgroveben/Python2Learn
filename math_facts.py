@@ -69,17 +69,30 @@ def set_max_num():
     return int(max_num)
 
 
-def do_math(x, operation, y, score):
+def play_again(x, choose_operation, y, score):
+    replay = input("Play again? y/n ")
+    if replay == "y":
+        print("got it")
+        #choose_operation = choose_operation()
+        print(x, choose_operation, y, score)
+        #start = time.time()
+        do_math(x, choose_operation, y, score)
+        #main()
+    else:
+        print("Goodbye")
+
+
+def do_math(x, choose_operation, y, score):
     game_length = 10
     while time.time() - start < game_length:
-        if operation == '+':
+        if choose_operation == '+':
             result = int(x + y)
-        elif operation == '-':
+        elif choose_operation == '-':
             x,y = max(x,y),min(x,y)
             result = int(x - y)
-        elif operation == 'x':
+        elif choose_operation == 'x':
             result =  int(x * y)
-        elif operation == '/':
+        elif choose_operation == '/':
             # Try something more elegant:
             x,y = max(x,y),min(x,y)
             result = x / y
@@ -95,6 +108,14 @@ def do_math(x, operation, y, score):
                 print("Time's Up")
                 print("Sorry, the last one doesn't count.")
                 print("Final Score : " + str(score))
+                print(x, choose_operation, y, score)
+                play_again(x, choose_operation, y, score)
+                #return None
+                #play_again = input("Play again? y/n: ")
+                #if play_again == 'y':
+                    #do_math(x, choose_operation, y, score)
+                #else:
+                    #break
             elif answer == result:
                 print("Time left: " + str(round(game_length - (time.time() - start))))
                 print("Correct!")
@@ -117,7 +138,10 @@ def do_math(x, operation, y, score):
             else:
                 print("Please enter a number.")
                 continue
-        break # break while loop, if necessary
+        #return None
+        #break # break while loop, if necessary
+        #play_again()
+        #main()
 
 
 def main():

@@ -83,7 +83,7 @@ def set_word_length():
 def play_again():
     replay = input("Play again? y/n ")
     if replay == "y":
-        play_game()
+        main()
     elif replay == "n":
         print("Goodbye")
     else:
@@ -104,7 +104,7 @@ def read_anagrams(word_length):
     return outer_list
 
 
-def play_game():
+def main():
     """As soon as you enter a correct word length, the game should start"""
     set_word_length()
     outer_list = read_anagrams(word_length)
@@ -127,7 +127,7 @@ def play_game():
             user_input = input("Enter a word: ")
             time_check = time.time()
             print("Time Elapsed: " + str(time.time() - start))
-            if time.time() - start >= game_length:
+            if time.time() - start > game_length:
                 print()
                 print("Time's Up")
                 print()
@@ -158,4 +158,4 @@ def play_game():
     print()
 
 
-play_game()
+main()
