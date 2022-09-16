@@ -84,10 +84,8 @@ def play_again():
     replay = input("Play again? y/n ")
     if replay == "y":
         main()
-    elif replay == "n":
-        print("Goodbye")
     else:
-        print("I don't get it. Goodbye")
+        print("Thank you for playing. Goodbye.")
 
 
 def read_anagrams(word_length):
