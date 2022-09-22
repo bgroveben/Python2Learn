@@ -26,6 +26,7 @@ class Calculator:
             elif op == '/':
                 x,y = max(x,y), min(x,y)
                 self._result = x / y
+                # try divmod()?
             else:
                 raise Exception("Operation must be +, -, *, or /.")
         except ValueError:
@@ -34,4 +35,4 @@ class Calculator:
 
     @property
     def result(self):
-        return self._result
+        return float(self._result)

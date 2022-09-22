@@ -57,6 +57,14 @@ If the time is already up when you submit an answer, you should get a message li
 >>>Press Enter to play again.
 
 """
+# Advanced Python -- Objects that Track their Own History
+# classes-objects/Demos/Die3.py -- roll history -> word history
+# Class attributes and Methods -- MyCounter.py to keep score
+# NonNegativeCounter to change words when the array is empty?
+# Initialize all attributes in __init__()
+
+
+
 import time
 import json
 import random
