@@ -80,7 +80,7 @@ class AnagramHunt:
         self._word_length = word_length
 
 
-    @classmethod
+    @classmethod  # cls instead of self, class v static methods
     def valid_len(self, n):
         """
         User must choose a word length between 5 and 8 (inclusive)

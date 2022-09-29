@@ -1,4 +1,3 @@
-
 """
 When you run math_facts.py in the console, you should be prompted to enter an op:
 >>>Please enter an op [+, -, x, /]:
