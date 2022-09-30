@@ -4,12 +4,6 @@ from MathFacts import MathFacts
 from Calculator import Calculator
 
 
-operation = MathFacts.choose_op()
-maximum = MathFacts.set_max_num()
-game_length = 10
-start = time.time()
-
-
 def run_game():
     if time.time() - start > (game_length + 1):
         print(round((time.time() - start),1))
@@ -64,8 +58,28 @@ def check_answer(result):
         return None
 
 
+def replay():
+    replay = input("Press Enter to play again.")
+    if replay == "":
+        start = time.time()
+        main()
+    else:
+        print("Thank you for playing. Goodbye.")
+        return None
+
+
 def main():
+    # Declare globals inside main() so user can set options on replay()
+    global game_length
+    global operation
+    global maximum
+    global start
+    operation = MathFacts.choose_op()
+    maximum = MathFacts.set_max_num()
+    start = time.time()
+    game_length = 10
     run_game()
+    replay()
 
 
 if __name__ == '__main__':

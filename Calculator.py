@@ -25,7 +25,7 @@ class Calculator:
                 self._result = x * y
             elif op == '/':
                 x,y = max(x,y), min(x,y)
-                self._result = x / y
+                self._result = round(x / y)
                 # try divmod()?
             else:
                 raise Exception("Operation must be +, -, *, or /.")
