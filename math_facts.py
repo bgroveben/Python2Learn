@@ -1,62 +1,43 @@
 import random
 import time
 from MathFacts import MathFacts
-from Calculator import Calculator
 
+"""
+When you run math_facts.py in the console, you should be prompted to enter an op:
+>>>Please enter an op [+, -, x, /]:
 
-def run_game():
-    if time.time() - start > (game_length + 1):
-        print(round((time.time() - start),1))
-        print("Game Over")
-        return None
-    do_math(maximum, operation)
+If you do not enter a correct op, you should get an error message and a prompt to enter an op again:
+>>>That is not a correct op. Please try again [+, -, x, /]:
 
+As soon as you enter a correct op, you should be prompted for a max number:
+>>>Please enter a max number between 1 and 100:
 
-def do_math(maximum, operation):
-    x = random.randint(1, maximum)
-    y = random.randint(1, maximum)
-    equation = f"{x} {operation} {y} = ?: "
-    answer = Calculator(x,y,operation).result
-    print(round((time.time() - start),1))
-    print(equation)
-    print(answer)
-    check_answer(answer)
+If an invalid number is entered, you should get an error message and another prompt.
+Once you have selected a valid op and max number, the game should start.
+A timer should start counting down from 30 by 1 every second.
+Every time a message is logged to the console, the value of the timer should be checked and displayed.
+A random problem with the selected op and numbers below the max number should display:
+>>>5 x 5 = ?
+>>>You have 30 seconds left.
+>>>Enter an answer:
 
+If the answer is incorrect, you should get an error and a prompt:
+>>>26 is not correct. Try again! 5 x 5 =?
+>>>You have 28 seconds left.
+>>>Enter an answer:
 
-def is_number(n):
-    if n.isnumeric():
-        return n
-    else:
-        return False
+If the answer is correct, it should tell you and display a new problem:
+>>>25 is correct!
+>>>3 x 5 = ?
+>>>You have 24 seconds left.
+>>>Enter an answer:
 
-
-def validate_input():
-    user_answer = input("Enter an answer: ")
-    while not is_number(user_answer):
-        if time.time() - start > (game_length + 1):
-            print(round((time.time() - start),1))
-            print("Game Over")
-            return None
-        user_answer = input("Invalid Entry. Enter an answer: ")
-    return user_answer
-
-
-def check_answer(result):
-    user_answer = validate_input()
-    try:
-        while float(user_answer) != float(result):
-            print(f"{user_answer} is not correct. Try again.")
-            if time.time() - start > (game_length + 1):
-                print(round((time.time() - start),1))
-                print("Game Over")
-                return None
-            user_answer = validate_input()
-        else:
-            print("Correct")
-            run_game()
-    except TypeError:
-        return None
-
+The game should end when the time runs out:
+>>>Time is up!
+>>>Sorry, you didn’t get that answer in on time.
+>>>You answered 15 problems!
+>>>Press Enter to play again.
+"""
 
 def replay():
     replay = input("Press Enter to play again.")
@@ -69,16 +50,9 @@ def replay():
 
 
 def main():
-    # Declare globals inside main() so user can set options on replay()
-    global game_length
-    global operation
-    global maximum
-    global start
-    operation = MathFacts.choose_op()
-    maximum = MathFacts.set_max_num()
-    start = time.time()
-    game_length = 10
-    run_game()
+    MathFacts.choose_op()
+    MathFacts.set_max_num()
+    MathFacts.run_game()
     replay()
 
 

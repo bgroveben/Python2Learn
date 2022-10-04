@@ -64,24 +64,11 @@ import time
 
 class AnagramHunt:
     """
-    Set attributes and write methods for Anagram Hunt Game
-    Keyword arguments --
-    -- wordlist    -> array
-    -- outer_list  -> array
-    -- anagram     -> str
-    -- answer      -> str
-    -- word_length -> str
+    Contains class methods that run the game.
     """
-    def __init__(self, wordlist, outer_list, anagram, answer, word_length):
-        self._wordlist = wordlist
-        self._outer_list = outer_list
-        self._anagram = anagram
-        self._answer = answer
-        self._word_length = word_length
 
-
-    @classmethod  # cls instead of self, class v static methods
-    def valid_len(self, n):
+    @classmethod
+    def valid_len(cls, n):
         """
         User must choose a word length between 5 and 8 (inclusive)
         """
@@ -92,18 +79,18 @@ class AnagramHunt:
 
 
     @classmethod
-    def set_word_length(self):
+    def set_word_length(cls):
         """
         Sets and returns word length
         """
-        self._word_length = input("Please enter a word length [5, 6, 7, 8]:")
-        while not self.valid_len(self._word_length):
+        cls._word_length = input("Please enter a word length [5, 6, 7, 8]:")
+        while not cls.valid_len(cls._word_length):
             length = input("That is not an option. Please enter a word length [5, 6, 7, 8]:")
-        return self._word_length
+        return cls._word_length
 
 
     @classmethod
-    def read_anagrams(self, word_length):
+    def read_anagrams(cls, word_length):
         """
         Reads json file containing a dictionary of nested arrays
         Keyword argument --
@@ -112,53 +99,50 @@ class AnagramHunt:
         """
         with open('data/anagrams.json', 'r') as f:
             data = f.read()
-        self._wordlist = json.loads(data)
-        self._outer_list = self._wordlist[str(word_length)]
-        return self._outer_list
+        cls._wordlist = json.loads(data)
+        cls._outer_list = cls._wordlist[str(word_length)]
+        return cls._outer_list
 
 
     @classmethod
-    def gameplay(self):
+    def gameplay(cls):
         """
         Chooses words and handles user input
-        -- anagrams_guessed -> array
-        -- score            -> int
-        -- start            -> time object
         Returns None when time has expired
         """
         anagrams_guessed = []
         score = 0
         start = time.time()
         game_length = 10  # hard-coded for assignment
-        for ary in range(len(self._outer_list)):
-            random_inner = self._outer_list[random.randrange(len(self._outer_list))]
-            self._anagram = random_inner[random.randrange(len(random_inner))]
+        for ary in range(len(cls._outer_list)):
+            random_inner = cls._outer_list[random.randrange(len(cls._outer_list))]
+            cls._anagram = random_inner[random.randrange(len(random_inner))]
             anagrams_guessed = []
-            anagrams_guessed.append(self._anagram)
+            anagrams_guessed.append(cls._anagram)
             while len(random_inner) > 1:
                 print()
                 print("random_inner: ")
                 print(random_inner)
                 print()
-                print("Anagrams for : " + self._anagram)
-                self._answer = input("Enter a word: ")
+                print("Anagrams for : " + cls._anagram)
+                cls._answer = input("Enter a word: ")
                 time_check = "You have " + str(round(game_length - (time.time() - start),1)) + " seconds left."
                 if time.time() - start > game_length:
                     print()
                     print("Time's Up")
                     print("Final Score : " + str(score))
                     return None
-                elif self._answer == self._anagram:
+                elif cls._answer == cls._anagram:
                     print("That's the word you were given")
                     print(time_check)
-                elif self._answer in anagrams_guessed:
+                elif cls._answer in anagrams_guessed:
                     print("Already guessed")
                     print(time_check)
-                elif self._answer in random_inner:
-                    anagrams_guessed.append(self._answer)
+                elif cls._answer in random_inner:
+                    anagrams_guessed.append(cls._answer)
                     print("anagrams_guessed: ")
                     print(anagrams_guessed)
-                    random_inner.remove(self._answer)
+                    random_inner.remove(cls._answer)
                     score += 1
                     print("Score : " + str(score))
                     print(time_check)
@@ -167,7 +151,7 @@ class AnagramHunt:
                     print("Not an anagram")
                     print(time_check)
             try:
-                self._outer_list.remove(random_inner)
+                cls._outer_list.remove(random_inner)
             except IndexError:  # outer list is empty
                 print()
                 print("You guessed all of the anagrams!")
