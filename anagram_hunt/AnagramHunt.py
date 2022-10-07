@@ -72,10 +72,7 @@ class AnagramHunt:
         """
         User must choose a word length between 5 and 8 (inclusive)
         """
-        if n.isnumeric():
-            return int(n) in range(5,9)
-        else:
-            return False
+        return n.isnumeric() and 5 <= int(n) <= 9
 
 
     @classmethod
@@ -85,7 +82,7 @@ class AnagramHunt:
         """
         cls._word_length = input("Please enter a word length [5, 6, 7, 8]:")
         while not cls.valid_len(cls._word_length):
-            length = input("That is not an option. Please enter a word length [5, 6, 7, 8]:")
+            cls._word_length = input("That is not an option. Please enter a word length [5, 6, 7, 8]:")
         return cls._word_length
 
 
@@ -97,7 +94,7 @@ class AnagramHunt:
         -- word_length -> int(n) in range(5,9)
         Returns outer array containing inner arrays of n-letter words
         """
-        with open('data/anagrams.json', 'r') as f:
+        with open('../data/anagrams.json', 'r') as f:
             data = f.read()
         cls._wordlist = json.loads(data)
         cls._outer_list = cls._wordlist[str(word_length)]

@@ -31,10 +31,11 @@ class MathFacts:
         """
         Validates user input for max_num
         """
-        if n.isnumeric():
-            return float(n) in range(1,101)
-        else:
+        try:
+            return int(n) in range(1,101)
+        except ValueError:
             return False
+
 
 
     @classmethod
@@ -92,7 +93,6 @@ class MathFacts:
         except TypeError:
             print('TypeError')
             cls.do_math(cls._start)
-            # return None
 
 
     @classmethod
@@ -116,9 +116,9 @@ class MathFacts:
         """
         Validates user input for answer
         """
-        if n.isnumeric():
-            return n
-        else:
+        try:
+            return int(n)
+        except ValueError:
             return False
 
 
