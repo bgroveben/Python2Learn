@@ -5,7 +5,7 @@ from MathFacts import MathFacts
 class TestMathFactsFunctions(unittest.TestCase):
 # Try using mocks?
 # https://stackoverflow.com/questions/47690020/python-3-unit-tests-with-user-input
-    def test_choose_op(self):
+    def test_choose_op_and_valid_op(self):
         self._valid_op = MathFacts.valid_op('+') # return True if valid
         self.assertIsInstance(self._valid_op, bool)
         self.assertTrue(self._valid_op)
@@ -23,9 +23,11 @@ class TestMathFactsFunctions(unittest.TestCase):
         # Needs mocks
         pass
 
-    def test_validate_input_and_is_number(self):
-        self.assertIsInstance(MathFacts.is_number('6'), int)
-        self.assertTrue(MathFacts.is_number('6'))
+    def test_validate_input(self):
+        # Needs mocks
+        #self.assertIsInstance(MathFacts.validate_input(), int)
+        #self.assertTrue(MathFacts.validate_input())
+        pass
 
     def test_run_game(self):
         pass

@@ -37,7 +37,6 @@ class MathFacts:
             return False
 
 
-
     @classmethod
     def set_max_num(cls):
         """
@@ -80,19 +79,18 @@ class MathFacts:
         user_answer = cls.validate_input()
         try:
             while float(user_answer) != float(result):
-                print(f"{user_answer} is not correct. Try again.")
                 if time.time() - cls._start > (cls._game_length):
                     print(round((time.time() - cls._start),1))
                     print("Game Over")
                     return None
+                print(f"{user_answer} is not correct. Try again.")
                 user_answer = cls.validate_input()
             else:
                 cls._score += 1
                 print("Correct ", cls._score)
                 cls.do_math(cls._start)
         except TypeError:
-            print('TypeError')
-            cls.do_math(cls._start)
+            return None
 
 
     @classmethod
@@ -102,24 +100,13 @@ class MathFacts:
         user's answer
         """
         user_answer = input("Enter an answer: ")
-        while not cls.is_number(user_answer):
+        while not user_answer.isnumeric():
+            user_answer = input("Invalid Entry. Enter an answer: ")
             if time.time() - cls._start > (cls._game_length):
                 print(round((time.time() - cls._start),1))
                 print("Game Over")
                 return None
-            user_answer = input("Invalid Entry. Enter an answer: ")
         return user_answer
-
-
-    @classmethod
-    def is_number(cls, n):
-        """
-        Validates user input for answer
-        """
-        try:
-            return int(n)
-        except ValueError:
-            return False
 
 
     @classmethod
