@@ -82,7 +82,7 @@ class AnagramHunt:
         """
         cls._word_length = input("Please enter a word length [5, 6, 7, 8]:")
         while not cls.valid_len(cls._word_length):
-            cls._word_length = input("That is not an option. Please enter a word length [5, 6, 7, 8]:")
+            cls._word_length = input("That is not a correct word length. Please try again [5, 6, 7, 8]:")
         return cls._word_length
 
 
@@ -94,11 +94,20 @@ class AnagramHunt:
         -- word_length -> int(n) in range(5,9)
         Returns outer array containing inner arrays of n-letter words
         """
-        with open('../data/anagrams.json', 'r') as f:
+        with open('../data/anagrams_test.json', 'r') as f:
             data = f.read()
         cls._wordlist = json.loads(data)
         cls._outer_list = cls._wordlist[str(word_length)]
         return cls._outer_list
+
+
+    @classmethod
+    def game_over(cls, score):
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print("You guessed all of the anagrams!")
+        print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        print("Final Score : " + str(score))
+        print()
 
 
     @classmethod
@@ -110,23 +119,29 @@ class AnagramHunt:
         anagrams_guessed = []
         score = 0
         start = time.time()
-        game_length = 10  # hard-coded for assignment
+        game_length = 45  # hard-coded for assignment
         for ary in range(len(cls._outer_list)):
             random_inner = cls._outer_list[random.randrange(len(cls._outer_list))]
             cls._anagram = random_inner[random.randrange(len(random_inner))]
             anagrams_guessed = []
             anagrams_guessed.append(cls._anagram)
             while len(random_inner) > 1:
-                print()
                 print("random_inner: ")
                 print(random_inner)
                 print()
-                print("Anagrams for : " + cls._anagram)
-                cls._answer = input("Enter a word: ")
+                if time.time() - start >= game_length:
+                    print()
+                    print("Time's Up")
+                    print("Final Score : " + str(score))
+                    return None
                 time_check = "You have " + str(round(game_length - (time.time() - start),1)) + " seconds left."
+                print("Anagrams for : " + cls._anagram)
+                print(time_check)
+                cls._answer = input("Enter a word: ")
                 if time.time() - start > game_length:
                     print()
                     print("Time's Up")
+                    print("Sorry, you didn’t get that last one in on time.")
                     print("Final Score : " + str(score))
                     return None
                 elif cls._answer == cls._anagram:
@@ -147,10 +162,7 @@ class AnagramHunt:
                 else:
                     print("Not an anagram")
                     print(time_check)
-            try:
+                    print()
+            else:
                 cls._outer_list.remove(random_inner)
-            except IndexError:  # outer list is empty
-                print()
-                print("You guessed all of the anagrams!")
-                print("Final Score : " + str(score))
-                return None
+        cls.game_over(score)
