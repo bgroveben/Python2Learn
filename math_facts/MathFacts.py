@@ -54,9 +54,12 @@ class MathFacts:
         Generates an equation based on game parameters,
         then calls check_answer()
         """
-        if time.time() - cls._start > (cls._game_length):
-            print(round((time.time() - cls._start),1))
-            print("Game Over")
+        time_check = "You have " + str(round(cls._game_length - (time.time() - start),1)) + " seconds left."
+        if time.time() - cls._start >= (cls._game_length):
+            print()
+            print("Time's Up")
+            print("Sorry, you didn’t get that answer in on time.")
+            print(f"You answered {cls._score} problems!")
             return None
         x = random.randint(1, int(cls._max_num))
         y = random.randint(1, int(cls._max_num))
@@ -64,9 +67,9 @@ class MathFacts:
             x,y = max(x,y), min(x,y)
         equation = f"{x} {cls._op} {y} = ?: "
         answer = Calculator(x,y,cls._op).result
-        print(round((time.time() - cls._start),1))
         print(equation)
         print(answer)
+        print(time_check)
         cls.check_answer(answer)
 
 
@@ -79,15 +82,26 @@ class MathFacts:
         user_answer = cls.validate_input()
         try:
             while float(user_answer) != float(result):
-                if time.time() - cls._start > (cls._game_length):
-                    print(round((time.time() - cls._start),1))
-                    print("Game Over")
+                if time.time() - cls._start >= (cls._game_length):
+                    print()
+                    print("Time's Up")
+                    print("Sorry, you didn’t get that answer in on time.")
+                    print(f"You answered {cls._score} problems!")
                     return None
-                print(f"{user_answer} is not correct. Try again.")
+                # 26 is not correct. Try again! 5 x 5 =?
+                print(f"{user_answer} is not correct. Try again! ")
+                print()
                 user_answer = cls.validate_input()
             else:
+                if time.time() - cls._start >= (cls._game_length):
+                    print()
+                    print("Time's Up")
+                    print("Sorry, you didn’t get that answer in on time.")
+                    print(f"You answered {cls._score} problems!")
+                    return None
                 cls._score += 1
-                print("Correct ", cls._score)
+                print(f"{user_answer} is correct!")
+                print()
                 cls.do_math(cls._start)
         except TypeError:
             return None
@@ -102,9 +116,11 @@ class MathFacts:
         user_answer = input("Enter an answer: ")
         while not user_answer.isnumeric():
             user_answer = input("Invalid Entry. Enter an answer: ")
-            if time.time() - cls._start > (cls._game_length):
-                print(round((time.time() - cls._start),1))
-                print("Game Over")
+            if time.time() - cls._start >= (cls._game_length):
+                print()
+                print("Time's Up")
+                print("Sorry, you didn’t get that answer in on time.")
+                print(f"You answered {cls._score} problems!")
                 return None
         return user_answer
 
@@ -118,4 +134,3 @@ class MathFacts:
         cls._game_length = 10
         cls._score = 0
         cls.do_math(cls._start)
-        print(round((time.time() - cls._start),1))
