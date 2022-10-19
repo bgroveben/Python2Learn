@@ -61,9 +61,9 @@ class MathFacts:
         y = random.randint(1, int(cls._max_num))
         if cls._op == '-' or cls._op == '/':
             x,y = max(x,y), min(x,y)
-        equation = f"{x} {cls._op} {y} = ?: "
+        cls._equation = f"{x} {cls._op} {y} = ?: "
         answer = Calculator(x,y,cls._op).result
-        print(equation)
+        print(cls._equation)
         print(answer)
         print("You have " + str(round(cls._game_length - (time.time() - start),1)) + " seconds left.")
         cls.check_answer(answer)
@@ -81,8 +81,7 @@ class MathFacts:
                 if time.time() - cls._start >= (cls._game_length):
                     cls.times_up()
                     return None
-                # 26 is not correct. Try again! 5 x 5 =?
-                print(f"{user_answer} is not correct. Try again! ")
+                print(f"{user_answer} is not correct. Try again! {cls._equation}")
                 print("You have " + str(round(cls._game_length - (time.time() - cls._start),1)) + " seconds left.")
                 user_answer = cls.validate_input()
             else:
@@ -93,7 +92,6 @@ class MathFacts:
                 print(f"{user_answer} is correct!")
                 print(f"Score: {cls._score}")
                 print("You have " + str(round(cls._game_length - (time.time() - cls._start),1)) + " seconds left.")
-                print()
                 cls.do_math(cls._start)
         except TypeError:
             return None
@@ -111,19 +109,21 @@ class MathFacts:
                 cls.times_up()
                 return None
             print("You have " + str(round(cls._game_length - (time.time() - cls._start),1)) + " seconds left.")
-            user_answer = input("Invalid Entry. Enter an answer: ")
+            user_answer = input(f"Invalid Entry. Try again! {cls._equation}")
         return user_answer
 
 
     @classmethod
     def times_up(cls):
         """
-        This method works in do_math() but not check_answer() or
-        validate_input(). I have no idea why.
+        Tells user the game is over and displays the score
         """
-        print("Time's Up")
+        print("Time is up!")
         print("Sorry, you didn’t get that answer in on time.")
-        print(f"You answered {cls._score} problems!")
+        if cls._score == 1:
+            print(f"You answered {cls._score} problem!")
+        else:
+            print(f"You answered {cls._score} problems!")
 
 
     @classmethod
@@ -134,4 +134,5 @@ class MathFacts:
         cls._start = time.time()
         cls._game_length = 10
         cls._score = 0
+        cls._equation = ""
         cls.do_math(cls._start)

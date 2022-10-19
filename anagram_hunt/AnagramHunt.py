@@ -126,43 +126,41 @@ class AnagramHunt:
             anagrams_guessed = []
             anagrams_guessed.append(cls._anagram)
             while len(random_inner) > 1:
-                print("random_inner: ")
-                print(random_inner)
                 print()
-                if time.time() - start >= game_length:
-                    print()
-                    print("Time's Up")
-                    print("Final Score : " + str(score))
-                    return None
+                print(f"{random_inner} Ch3@t3r")
+                print()
+                #if time.time() - start >= game_length:
+                    #print()
+                    #print("Time's Up")
+                    #print("Final Score : " + str(score))
+                    #return None
                 time_check = "You have " + str(round(game_length - (time.time() - start),1)) + " seconds left."
-                print("Anagrams for : " + cls._anagram)
+                print(f"The word is: {cls._anagram.upper()}")
+                if len(random_inner) == 2:
+                    print("There is 1 unguessed anagram left.")
+                else:
+                    print(f"There are {len(random_inner)-1} unguessed anagrams.")
                 print(time_check)
-                cls._answer = input("Enter a word: ")
+                cls._answer = input("Make a guess: ")
+                print()
                 if time.time() - start > game_length:
-                    print()
-                    print("Time's Up")
+                    print("Time is up")
                     print("Sorry, you didn’t get that last one in on time.")
                     print("Final Score : " + str(score))
                     return None
                 elif cls._answer == cls._anagram:
-                    print("That's the word you were given")
-                    print(time_check)
+                    print(f"{cls._anagram.upper()} is the word you were given. Try again.")
                 elif cls._answer in anagrams_guessed:
-                    print("Already guessed")
-                    print(time_check)
+                    print(f"You already got {cls._answer.upper()}. Try again.")
                 elif cls._answer in random_inner:
                     anagrams_guessed.append(cls._answer)
-                    print("anagrams_guessed: ")
-                    print(anagrams_guessed)
-                    random_inner.remove(cls._answer)
                     score += 1
-                    print("Score : " + str(score))
-                    print(time_check)
-                    print()
+                    print(f"{cls._answer.upper()} is correct!")
+                    random_inner.remove(cls._answer)
+                    if len(random_inner) == 1:
+                        print(f"You got all the anagrams for {cls._anagram.upper()}!")
                 else:
-                    print("Not an anagram")
-                    print(time_check)
-                    print()
+                    print(f"{cls._answer.upper()} is not a valid anagram. Please try again.")
             else:
                 cls._outer_list.remove(random_inner)
         cls.game_over(score)
