@@ -5,7 +5,7 @@
 
 TODO:
 
-Fix Math Facts division
+Fix Math Facts division.
 Anagram Hunt -- Fix console messages to match assignment.
 Create threading.timer object for both games to time out user input.
 Complete tests.

@@ -1,5 +1,7 @@
 import random
 import time
+from threading import Timer
+from pynput.keyboard import Key, Controller
 from Calculator import Calculator
 
 class MathFacts:
@@ -81,6 +83,7 @@ class MathFacts:
                 if time.time() - cls._start >= (cls._game_length):
                     cls.times_up()
                     return None
+                print()
                 print(f"{user_answer} is not correct. Try again! {cls._equation}")
                 print("You have " + str(round(cls._game_length - (time.time() - cls._start),1)) + " seconds left.")
                 user_answer = cls.validate_input()
@@ -91,7 +94,7 @@ class MathFacts:
                 cls._score += 1
                 print(f"{user_answer} is correct!")
                 print(f"Score: {cls._score}")
-                print("You have " + str(round(cls._game_length - (time.time() - cls._start),1)) + " seconds left.")
+                print()
                 cls.do_math(cls._start)
         except TypeError:
             return None
@@ -109,21 +112,33 @@ class MathFacts:
                 cls.times_up()
                 return None
             print("You have " + str(round(cls._game_length - (time.time() - cls._start),1)) + " seconds left.")
-            user_answer = input(f"Invalid Entry. Try again! {cls._equation}")
+            print()
+            user_answer = input(f"Numbers only please. Try again! {cls._equation}")
         return user_answer
 
 
     @classmethod
     def times_up(cls):
         """
-        Tells user the game is over and displays the score
+        Displays the score
         """
-        print("Time is up!")
-        print("Sorry, you didn’t get that answer in on time.")
         if cls._score == 1:
             print(f"You answered {cls._score} problem!")
         else:
             print(f"You answered {cls._score} problems!")
+
+
+    @classmethod
+    def timeout(cls):
+        """
+        Interrupts user input and tells user that they are out of time
+        """
+        print("\n")
+        print("Time is up!")
+        print()
+        print("Sorry, you didn’t get that answer in on time.")
+        keyboard = Controller()
+        keyboard.press(Key.enter)
 
 
     @classmethod
@@ -132,7 +147,9 @@ class MathFacts:
         Starts timer when called, then calls do_math() until time expires
         """
         cls._start = time.time()
-        cls._game_length = 10
+        cls._game_length = 15
         cls._score = 0
         cls._equation = ""
+        t = Timer(cls._game_length, cls.timeout)
+        t.start()
         cls.do_math(cls._start)

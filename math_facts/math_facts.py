@@ -40,6 +40,7 @@ The game should end when the time runs out:
 """
 
 def replay():
+    print()
     replay = input("Press Enter to play again.")
     if replay == "":
         start = time.time()
