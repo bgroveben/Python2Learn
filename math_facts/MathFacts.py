@@ -120,7 +120,17 @@ class MathFacts:
     @classmethod
     def times_up(cls):
         """
-        Displays the score
+        Tells user the game is over and displays the score
+        Why are times_up() and timeout() separate functions?
+        If the user is on a roll, they will hit the Enter key quickly enough
+        to unintentionally restart the game.
+        This helps with math practice, but it bothered one user enough to
+        implement a workaround.
+        Basically, the user has to hit the Enter key twice to restart the
+        game, and their score will show up after the extra keypress.
+        I'm not sure if this is a solution, hack, patch, or whatever else.
+        I don't know enough about software engineering to make that call.
+        Yet ;)
         """
         if cls._score == 1:
             print(f"You answered {cls._score} problem!")
@@ -131,14 +141,14 @@ class MathFacts:
     @classmethod
     def timeout(cls):
         """
-        Interrupts user input and tells user that they are out of time
+        Tells user that they are out of time
         """
         print("\n")
         print("Time is up!")
         print()
         print("Sorry, you didn’t get that answer in on time.")
-        keyboard = Controller()
-        keyboard.press(Key.enter)
+        print()
+        print("Press Enter to see your score...")
 
 
     @classmethod

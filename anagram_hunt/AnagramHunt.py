@@ -60,6 +60,8 @@ If the time is already up when you submit an answer, you should get a message li
 import json
 import random
 import time
+from threading import Timer
+from pynput.keyboard import Key, Controller
 
 
 class AnagramHunt:
@@ -102,11 +104,12 @@ class AnagramHunt:
 
 
     @classmethod
-    def game_over(cls, score):
+    def game_over(cls):
+        cls._timer.cancel()
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         print("You guessed all of the anagrams!")
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        print("Final Score : " + str(score))
+        print(f"You got {cls._score} anagrams for {cls._word_length}-letter words!")
         print()
 
 
@@ -117,36 +120,32 @@ class AnagramHunt:
         Returns None when time has expired
         """
         anagrams_guessed = []
-        score = 0
+        cls._score = 0
         start = time.time()
-        game_length = 45  # hard-coded for assignment
+        cls._game_length = 45  # hard-coded for assignment
+        cls._game_on = True
+        cls._timer = Timer(cls._game_length, cls.timeout)
+        cls._timer.start()
         for ary in range(len(cls._outer_list)):
             random_inner = cls._outer_list[random.randrange(len(cls._outer_list))]
             cls._anagram = random_inner[random.randrange(len(random_inner))]
             anagrams_guessed = []
             anagrams_guessed.append(cls._anagram)
-            while len(random_inner) > 1:
+            while len(random_inner) > 1 and cls._game_on == True:
                 print()
                 print(f"{random_inner} Ch3@t3r")
                 print()
-                #if time.time() - start >= game_length:
-                    #print()
-                    #print("Time's Up")
-                    #print("Final Score : " + str(score))
-                    #return None
-                time_check = "You have " + str(round(game_length - (time.time() - start),1)) + " seconds left."
+                time_check = "You have " + str(round(cls._game_length - (time.time() - start),1)) + " seconds left."
                 print(f"The word is: {cls._anagram.upper()}")
                 if len(random_inner) == 2:
                     print("There is 1 unguessed anagram left.")
                 else:
-                    print(f"There are {len(random_inner)-1} unguessed anagrams.")
+                    print(f"There are {len(random_inner)-1} unguessed anagrams left.")
                 print(time_check)
                 cls._answer = input("Make a guess: ")
                 print()
-                if time.time() - start > game_length:
-                    print("Time is up")
-                    print("Sorry, you didn’t get that last one in on time.")
-                    print("Final Score : " + str(score))
+                if time.time() - start >= cls._game_length:
+                    # stops Enter key from continuing current game
                     return None
                 elif cls._answer == cls._anagram:
                     print(f"{cls._anagram.upper()} is the word you were given. Try again.")
@@ -154,7 +153,7 @@ class AnagramHunt:
                     print(f"You already got {cls._answer.upper()}. Try again.")
                 elif cls._answer in random_inner:
                     anagrams_guessed.append(cls._answer)
-                    score += 1
+                    cls._score += 1
                     print(f"{cls._answer.upper()} is correct!")
                     random_inner.remove(cls._answer)
                     if len(random_inner) == 1:
@@ -163,4 +162,27 @@ class AnagramHunt:
                     print(f"{cls._answer.upper()} is not a valid anagram. Please try again.")
             else:
                 cls._outer_list.remove(random_inner)
-        cls.game_over(score)
+        cls.game_over()
+
+
+    @classmethod
+    def timeout(cls):
+        """
+        Tells user that they are out of time, and interrupts keyboard input
+        so that replay() works in main().
+        This code could inherit any bugs that come with pynput.
+        # https://pypi.org/project/pynput/
+        # https://xkcd.com/353/
+        """
+        print("\n")
+        print("Time is up!")
+        print()
+        print("Sorry, you didn’t get that last one in on time.")
+        print()
+        if cls._score == 1:
+            print(f"You got {cls._score} anagram for {cls._word_length}-letter words")
+        else:
+            print(f"You got {cls._score} anagrams for {cls._word_length}-letter words")
+        keyboard = Controller()
+        keyboard.press(Key.enter)
+        print("*********************************************")
