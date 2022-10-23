@@ -61,8 +61,14 @@ class MathFacts:
             return None
         x = random.randint(1, int(cls._max_num))
         y = random.randint(1, int(cls._max_num))
-        if cls._op == '-' or cls._op == '/':
+        if cls._op == '-':
             x,y = max(x,y), min(x,y)
+        if cls._op == '/':
+            x,y = max(x,y), min(x,y)
+            while x % y != 0 or y == 1 or x == y:
+                x = random.randint(1, int(cls._max_num))
+                y = random.randint(1, int(cls._max_num))
+                x,y = max(x,y), min(x,y)
         cls._equation = f"{x} {cls._op} {y} = ?: "
         answer = Calculator(x,y,cls._op).result
         print(cls._equation)
