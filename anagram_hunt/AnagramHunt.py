@@ -92,8 +92,7 @@ class AnagramHunt:
     def read_anagrams(cls, word_length):
         """
         Reads json file containing a dictionary of nested arrays
-        Keyword argument --
-        -- word_length -> int(n) in range(5,9)
+        word_length -> int(n) in range(5,9)
         Returns outer array containing inner arrays of n-letter words
         """
         with open('../data/anagrams_test.json', 'r') as f:
@@ -105,6 +104,9 @@ class AnagramHunt:
 
     @classmethod
     def game_over(cls):
+        """
+        Cancels game timer, congratulates user, and displays score
+        """
         cls._timer.cancel()
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         print("You guessed all of the anagrams!")
@@ -117,7 +119,7 @@ class AnagramHunt:
     def gameplay(cls):
         """
         Chooses words and handles user input
-        Returns None when time has expired
+        Continues until user has guessed all anagrams or timer expires
         """
         anagrams_guessed = []
         cls._score = 0

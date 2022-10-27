@@ -11,10 +11,13 @@ class TestCalculatorFunctions(unittest.TestCase):
 
     def test_add(self):
         self.assertEqual(self.addition.result, 4)
+
     def test_subtract(self):
         self.assertEqual(self.subtraction.result, 1)
+
     def test_multiply(self):
         self.assertEqual(self.multiplication.result, 12)
+        
     def test_divide(self):
         self.assertEqual(self.division.result, 5.0)
 

@@ -1,7 +1,6 @@
 import random
 import time
 from threading import Timer
-from pynput.keyboard import Key, Controller
 from Calculator import Calculator
 
 class MathFacts:

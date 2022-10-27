@@ -4,6 +4,19 @@
 
 
 ## TODO:
+Make sure game length is correct and you use the full list of anagrams.
+Make sure console output is correct.
+Clean up code and check for bugs.
+Make a note about the following:
+>100 / 2 = ?:
+50.0
+You have 0.0 seconds left.
+Enter an answer:
+Time is up!
+Sorry, you didn’t get that answer in on time.
+Press Enter to see your score...
+
+
 
 ### Bug In Anagram Hunt that I can't reproduce
 -- try to test for if
@@ -26,11 +39,6 @@ Make a guess: bgt
 Press Enter to play again.
 
 
-
-Use keyboard interrupt in MathFacts?
-Fix Math Facts division.
-Complete tests.
-
 The assignment instructions for Anagram Hunt specify:
 
 >The game should end when the timer runs out or when you get through all of the anagram sets for the specified length. If you check the time and it is up, you can display a message like this:
@@ -46,7 +54,6 @@ The assignment instructions for Anagram Hunt specify:
 `You got 7 anagrams for 5-letter words!`
 `Press Enter to play again.`
 
-I tried to make a timer that would print both messages, but failed several times.
-So I created a threading.Timer object that calls a function which displays a  single message when time runs out.
+I created a threading.Timer object that calls a function which displays a  single message when time runs out.
 There is a game timer (started at the same time) running on the main thread that displays the game time remaining to the user.
-I also wrote a function that cancels the threading.Timer object and prints out congratulations and the score to the user.
+If the user guesses all of the anagrams, the timer is cancelled.
