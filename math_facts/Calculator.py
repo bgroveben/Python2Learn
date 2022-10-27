@@ -1,6 +1,7 @@
 class Calculator:
     "Execute simple math operations"
-    def __init__(self, x, y, op='+'):
+
+    def __init__(self, x, y, op="+"):
         """
         x -> int
         y -> int
@@ -16,13 +17,13 @@ class Calculator:
         """
         try:
             int(x) and int(y)
-            if op == '+':
+            if op == "+":
                 self._result = x + y
-            elif op == '-':
+            elif op == "-":
                 self._result = x - y
-            elif op == '*':
+            elif op == "*":
                 self._result = x * y
-            elif op == '/':
+            elif op == "/":
                 self._result = round(x / y)
             else:
                 raise Exception("Operation must be +, -, *, or /.")

@@ -55,7 +55,7 @@ class MathFacts:
         Generates an equation based on game parameters,
         then calls check_answer()
         """
-        if time.time() - start >= (cls._game_length):
+        if time.time() - start > (cls._game_length):
             cls.times_up()
             return None
         x = random.randint(1, int(cls._max_num))
@@ -85,7 +85,7 @@ class MathFacts:
         user_answer = cls.validate_input()
         try:
             while float(user_answer) != float(result):
-                if time.time() - cls._start >= (cls._game_length):
+                if time.time() - cls._start > (cls._game_length):
                     cls.times_up()
                     return None
                 print()
@@ -93,7 +93,7 @@ class MathFacts:
                 print("You have " + str(round(cls._game_length - (time.time() - cls._start),1)) + " seconds left.")
                 user_answer = cls.validate_input()
             else:
-                if time.time() - cls._start >= (cls._game_length):
+                if time.time() - cls._start > (cls._game_length):
                     cls.times_up()
                     return None
                 cls._score += 1
@@ -113,7 +113,7 @@ class MathFacts:
         """
         user_answer = input("Enter an answer: ")
         while not user_answer.isnumeric():
-            if time.time() - cls._start >= (cls._game_length):
+            if time.time() - cls._start > (cls._game_length):
                 cls.times_up()
                 return None
             print("You have " + str(round(cls._game_length - (time.time() - cls._start),1)) + " seconds left.")
