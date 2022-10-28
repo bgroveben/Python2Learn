@@ -37,7 +37,7 @@ class AnagramHunt:
         word_length -> int(n) in range(5,9)
         Returns outer array containing inner arrays of n-letter words
         """
-        with open('../data/fewer_anagrams.json', 'r') as f:
+        with open('../data/anagrams.json', 'r') as f:
             data = f.read()
         cls._wordlist = json.loads(data)
         cls._outer_list = cls._wordlist[str(word_length)]
@@ -69,22 +69,21 @@ class AnagramHunt:
         anagrams_guessed = []
         cls._score = 0
         start = time.time()
-        cls._game_length = 45  # hard-coded for assignment
+        cls._game_length = 60  # hard-coded for assignment
         cls._game_on = True
         cls._timer = Timer(cls._game_length - 0.5, cls.timeout)
         # Why cheat the user out of one half second?
         # So the console doesn't display:
-        # -> You have 0 seconds left.
+        # => You have 0 seconds left.
         cls._timer.start()
         for ary in range(len(cls._outer_list)):
-            random_inner = cls._outer_list[random.randrange(len(cls._outer_list))]
+            random_inner= cls._outer_list[random.randrange(
+                                                len(cls._outer_list))]
             cls._anagram = random_inner[random.randrange(len(random_inner))]
             anagrams_guessed = []
             anagrams_guessed.append(cls._anagram)
             while len(random_inner) > 1 and cls._game_on == True:
-                print()
-                print(f"{random_inner} Ch3@t3r")
-                print()
+                #print(f"{random_inner} Ch3@t3r")
                 print("You have " + str(round(cls._game_length -
                      (time.time() - start))) + " seconds left.")
                 print(f"The word is: {cls._anagram.upper()}")

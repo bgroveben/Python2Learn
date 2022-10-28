@@ -111,8 +111,6 @@ class MathFacts:
                 cls._score += 1
                 print()
                 print(f"{user_answer} is correct!")
-                #print(f"Score: {cls._score}")
-                #print()
                 cls.do_math(cls._start)
         except TypeError:
             return None
@@ -183,12 +181,12 @@ class MathFacts:
         Starts timer when called, then calls do_math() until time expires
         """
         cls._start = time.time()
-        cls._game_length = 15
+        cls._game_length = 30
         cls._score = 0
         cls._equation = ""
         t = Timer(cls._game_length - 0.5, cls.timeout)
         # Why cheat the user out of one half second?
         # So the console doesn't display:
-        # -> You have 0 seconds left.
+        # => You have 0 seconds left.
         t.start()
         cls.do_math(cls._start)
