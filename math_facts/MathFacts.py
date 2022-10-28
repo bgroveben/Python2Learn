@@ -55,9 +55,9 @@ class MathFacts:
         Generates an equation based on game parameters,
         then calls check_answer()
         """
-        if time.time() - start > (cls._game_length):
+        if time.time() - cls._start >= (cls._game_length - 0.5):
             cls.times_up()
-            return None
+            return None # stops Enter key from continuing current game
         x = random.randint(1, int(cls._max_num))
         y = random.randint(1, int(cls._max_num))
         if cls._op == '-':
@@ -71,8 +71,14 @@ class MathFacts:
         cls._equation = f"{x} {cls._op} {y} = ?: "
         answer = Calculator(x,y,cls._op).result
         print(cls._equation)
-        print(answer)
-        print("You have " + str(round(cls._game_length - (time.time() - start),1)) + " seconds left.")
+        # print(answer)
+        if str(round(cls._game_length -
+            (time.time() - cls._start))) == '1':
+            print("You have " + str(round(cls._game_length -
+                 (time.time() - cls._start))) + " second left.")
+        else:
+            print("You have " + str(round(cls._game_length -
+                 (time.time() - cls._start))) + " seconds left.")
         cls.check_answer(answer)
 
 
@@ -85,21 +91,28 @@ class MathFacts:
         user_answer = cls.validate_input()
         try:
             while float(user_answer) != float(result):
-                if time.time() - cls._start > (cls._game_length):
+                if time.time() - cls._start >= (cls._game_length - 0.5):
                     cls.times_up()
                     return None
                 print()
                 print(f"{user_answer} is not correct. Try again! {cls._equation}")
-                print("You have " + str(round(cls._game_length - (time.time() - cls._start),1)) + " seconds left.")
+                if str(round(cls._game_length -
+                    (time.time() - cls._start))) == '1':
+                    print("You have " + str(round(cls._game_length -
+                         (time.time() - cls._start))) + " second left.")
+                else:
+                    print("You have " + str(round(cls._game_length -
+                         (time.time() - cls._start))) + " seconds left.")
                 user_answer = cls.validate_input()
             else:
-                if time.time() - cls._start > (cls._game_length):
+                if time.time() - cls._start >= (cls._game_length - 0.5):
                     cls.times_up()
                     return None
                 cls._score += 1
-                print(f"{user_answer} is correct!")
-                print(f"Score: {cls._score}")
                 print()
+                print(f"{user_answer} is correct!")
+                #print(f"Score: {cls._score}")
+                #print()
                 cls.do_math(cls._start)
         except TypeError:
             return None
@@ -113,12 +126,20 @@ class MathFacts:
         """
         user_answer = input("Enter an answer: ")
         while not user_answer.isnumeric():
-            if time.time() - cls._start > (cls._game_length):
+            if time.time() - cls._start >= (cls._game_length - 0.5):
                 cls.times_up()
                 return None
-            print("You have " + str(round(cls._game_length - (time.time() - cls._start),1)) + " seconds left.")
             print()
-            user_answer = input(f"Numbers only please. Try again! {cls._equation}")
+            if str(round(cls._game_length -
+                (time.time() - cls._start))) == '1':
+                print("You have " + str(round(cls._game_length -
+                     (time.time() - cls._start))) + " second left.")
+            else:
+                print("You have " + str(round(cls._game_length -
+                     (time.time() - cls._start))) + " seconds left.")
+            user_answer = input(
+                        f"Numbers only please. Try again! {cls._equation}"
+                        )
         return user_answer
 
 
@@ -165,6 +186,9 @@ class MathFacts:
         cls._game_length = 15
         cls._score = 0
         cls._equation = ""
-        t = Timer(cls._game_length, cls.timeout)
+        t = Timer(cls._game_length - 0.5, cls.timeout)
+        # Why cheat the user out of one half second?
+        # So the console doesn't display:
+        # -> You have 0 seconds left.
         t.start()
         cls.do_math(cls._start)
