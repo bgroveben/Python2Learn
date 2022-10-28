@@ -24,7 +24,9 @@ class AnagramHunt:
         """
         cls._word_length = input("Please enter a word length [5, 6, 7, 8]:")
         while not cls.valid_len(cls._word_length):
-            cls._word_length = input("That is not a correct word length. Please try again [5, 6, 7, 8]:")
+            cls._word_length = input(
+            "That is not a correct word length. Please try again [5, 6, 7, 8]:"
+            )
         return cls._word_length
 
 
@@ -51,7 +53,9 @@ class AnagramHunt:
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         print("You guessed all of the anagrams!")
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        print(f"You got {cls._score} anagrams for {cls._word_length}-letter words!")
+        print(
+        f"You got {cls._score} anagrams for {cls._word_length}-letter words!"
+        )
         print()
 
 
@@ -67,7 +71,10 @@ class AnagramHunt:
         start = time.time()
         cls._game_length = 45  # hard-coded for assignment
         cls._game_on = True
-        cls._timer = Timer(cls._game_length, cls.timeout)
+        cls._timer = Timer(cls._game_length - 0.5, cls.timeout)
+        # Why cheat the user out of one half second?
+        # So the console doesn't display:
+        # -> You have 0 seconds left.
         cls._timer.start()
         for ary in range(len(cls._outer_list)):
             random_inner = cls._outer_list[random.randrange(len(cls._outer_list))]
@@ -78,17 +85,18 @@ class AnagramHunt:
                 print()
                 print(f"{random_inner} Ch3@t3r")
                 print()
-                time_check = "You have " + str(round(cls._game_length - (time.time() - start),1)) + " seconds left."
+                print("You have " + str(round(cls._game_length -
+                     (time.time() - start))) + " seconds left.")
                 print(f"The word is: {cls._anagram.upper()}")
                 if len(random_inner) == 2:
                     print("There is 1 unguessed anagram left.")
                 else:
-                    print(f"There are {len(random_inner)-1} unguessed anagrams left.")
-                print(time_check)
+                    print(
+                    f"There are {len(random_inner)-1} unguessed anagrams left."
+                    )
                 cls._answer = input("Make a guess: ")
                 print()
-                if time.time() - start > cls._game_length:
-                    # stops Enter key from continuing current game
+                if time.time() - start >= cls._game_length - 0.5:
                     return None
                 elif cls._answer == cls._anagram:
                     print(f"{cls._anagram.upper()} is the word you were given. Try again.")
@@ -100,7 +108,9 @@ class AnagramHunt:
                     print(f"{cls._answer.upper()} is correct!")
                     random_inner.remove(cls._answer)
                     if len(random_inner) == 1:
-                        print(f"You got all the anagrams for {cls._anagram.upper()}!")
+                        print(
+                        f"You got all the anagrams for {cls._anagram.upper()}!"
+                        )
                 else:
                     print(f"{cls._answer.upper()} is not a valid anagram. Please try again.")
             else:
