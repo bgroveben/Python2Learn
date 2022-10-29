@@ -1,4 +1,3 @@
-import random
 import time
 from MathFacts import MathFacts
 

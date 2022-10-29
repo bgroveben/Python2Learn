@@ -30,6 +30,7 @@ class Calculator:
         except ValueError:
             print("x and y must be numbers")
 
+
     @property
     def result(self):
         return float(self._result)
